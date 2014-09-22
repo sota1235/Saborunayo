@@ -13,6 +13,7 @@
     "author": "@sota1235",
     "license": "MIT",
     "dependencies": {
-      "express": "*"
+      "express": "*",
+      "jade": "*"
     }
 }
