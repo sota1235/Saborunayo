@@ -1,20 +1,20 @@
 {
   "name": "SABORUNA_YO",
-    "version": "0.0.1",
-    "description": "Yo account for GitHub contribution checking.",
-    "main": "app.coffee",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-      "Yo",
+  "version": "0.0.1",
+  "description": "Yo account for GitHub contribution checking.",
+  "main": "app.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Yo",
     "GitHub"
-      ],
-    "author": "@sota1235",
-    "license": "MIT",
-    "dependencies": {
-      "express": "*",
-      "jade": "*",
-      "pg": "*"
-    }
+  ],
+  "author": "@sota1235",
+  "license": "MIT",
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "pg": "^3.4.4"
+  }
 }
