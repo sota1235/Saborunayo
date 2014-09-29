@@ -1,4 +1,5 @@
 express = require 'express'
+async   = require 'async'
 
 Db_Handler = require(__dirname + '/public/js/db_handler')
 handle = new Db_Handler()
@@ -16,8 +17,15 @@ app.get '/', (req, res) ->
 app.listen 3000
 console.log 'Saborunayo running'
 
-handle.writeData 'test', 'sota1236', (err, data) ->
-  console.log 'Result:' + data
+funcs = [
+  (callback) ->
+    handle.writeData 'test', 'sota1236', (err, data) ->
+      console.log 'Result:' + data
+      callback null, 'one'
+  (callback) ->
+    handle.getGithubName 'test', (err, data) ->
+      console.log 'Result:' + data
+      callback null, 'two'
+]
 
-handle.getGithubName 'test', (err, data) ->
-  console.log 'Result:' + data
+async.series funcs
