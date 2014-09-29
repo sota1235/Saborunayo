@@ -1,5 +1,8 @@
 express = require 'express'
-pg = require 'pg'
+
+Db_Handler = require(__dirname + '/public/js/db_handler')
+handle = new Db_Handler()
+
 app = express()
 
 app.set 'view engine', 'jade'
@@ -13,16 +16,8 @@ app.get '/', (req, res) ->
 app.listen 3000
 console.log 'Saborunayo running'
 
-# databaseの読み出し
-# Thanks for http://qiita.com/ta9to/items/f7b55246cfe42ed14743
-pg.connect process.env.DATABASE_URL, (err, client, done) ->
-  if err
-    return console.error 'error fetching client from pool', err
+handle.writeData 'test', 'sota1236', (err, data) ->
+  console.log 'Result:' + data
 
-  client.query 'SELECT * FROM post', (err, result) ->
-    done()
-
-    if err
-      return console.error 'error running query', err
-
-    console.log result.rows
+handle.getGithubName 'test', (err, data) ->
+  console.log 'Result:' + data
