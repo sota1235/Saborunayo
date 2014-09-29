@@ -37,7 +37,7 @@ module.exports = class Db_Handler
   getGithubName: (yo_name, callback = ->) ->
     query = "SELECT github_name FROM #{@db_name} WHERE yo_name='#{yo_name}';"
     @sendQuery query, (data) ->
-      callback data[0], data[1]
+      callback data[0], JSON.stringify data[1]
       return
 
   # Insert data to database
