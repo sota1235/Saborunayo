@@ -12,3 +12,6 @@
 */
 
 Route::get('/', 'MainController@index');
+
+// for ajax
+Route::post('/check/git', 'AjaxController@checkGitHubName');
