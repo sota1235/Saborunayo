@@ -2,8 +2,9 @@
 /**
  * GitHubの情報を取得する
  */
+namespace App\Interfaces\Services;
 
-interface GitHubService {
+interface GitHubServiceInterface {
     /**
      * GitHubにユーザが存在するかどうかチェックする
      *
