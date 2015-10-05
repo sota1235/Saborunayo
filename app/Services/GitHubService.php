@@ -5,6 +5,7 @@
 namespace App\Services;
 
 use App\Interfaces\Services\GitHubServiceInterface;
+use Sunra\PhpSimple\HtmlDomParser;
 
 /**
  * GitHub上での情報をチェックする
@@ -27,11 +28,10 @@ class GitHubService extends Service implements GitHubServiceInterface {
      */
     public function isExist($userName)
     {
-        $userPageUrl = 'https://github.com/'.$userName;
+        $userPageUrl = $this->getGitHubUrl($userName);
 
         // GET request
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request(
+        $res = $this->getHttpClient()->request(
             'GET',
             $userPageUrl,
             [ 'http_errors' => false ] // not throw exception when 40x, 50x
@@ -52,5 +52,17 @@ class GitHubService extends Service implements GitHubServiceInterface {
      */
     public function checkContribution($userName)
     {
+    }
+
+    /**
+     * ユーザページのURLを取得
+     *
+     * @param string $userName
+     *
+     * @return string $url
+     */
+    protected function getGitHubUrl($userName)
+    {
+         return 'https://github.com/'.$userName;
     }
 }
