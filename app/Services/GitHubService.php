@@ -52,6 +52,16 @@ class GitHubService extends Service implements GitHubServiceInterface {
      */
     public function checkContribution($userName)
     {
+        // Getting user page souce
+        $body = $this->getHttpClient()->request(
+            'GET',
+            $this->getGitHubUrl($userName)
+        )->getBody()->getContents();
+
+        // parse response body
+        $dom = HtmlDomParser::str_get_html($body);
+        $elms = $dom->find('rect[class=day]');
+        return (string)$elms[0];
     }
 
     /**
