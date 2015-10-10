@@ -2,7 +2,8 @@
  * index.js
  */
 
-$ = require('jquery');
+var $ = require('jquery');
+import Ajax from './ajax.babel.js';
 
 $(() => {
   console.log('test');
