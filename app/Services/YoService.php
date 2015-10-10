@@ -54,7 +54,7 @@ class YoService extends Service implements YoServiceInterface
     {
         $apiUrl = $this->apiBaseUrl.'/yo/';
 
-        // POST /yoall/
+        // POST /yo/
         try {
             $this->getHttpClient()->request(
                 'POST',
@@ -64,7 +64,7 @@ class YoService extends Service implements YoServiceInterface
                     'username'  => $userName,
                 ]
             );
-            Log::info(__FILE__.__function__.__line__.'Send yo to'.$userName);
+            \Log::info(__FILE__.__function__.__line__.'Send yo to'.$userName);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             \Log::error(__FILE__.__function__.__line__.'Send Yo to '.$userName.' failed');
         }
