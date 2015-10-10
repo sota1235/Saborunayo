@@ -10,8 +10,8 @@ use Sunra\PhpSimple\HtmlDomParser;
 /**
  * GitHub上での情報をチェックする
  */
-class GitHubService extends Service implements GitHubServiceInterface {
-
+class GitHubService extends Service implements GitHubServiceInterface
+{
     /**
      * constructor
      */
