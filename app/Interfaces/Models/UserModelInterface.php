@@ -4,7 +4,8 @@
  */
 namespace App\Interfaces\Models;
 
-interface UserModelInterface {
+interface UserModelInterface
+{
   /**
    * ユーザを登録する
    *
