@@ -6,6 +6,7 @@
     "bootstrap-sass": "^3.0.0",
     "browserify": "^11.2.0",
     "browserify-shim": "^3.8.10",
+    "es6-promise": "^3.0.2",
     "glob": "^5.0.15",
     "gulp": "^3.9.0",
     "gulp-sourcemaps": "^1.6.0",
