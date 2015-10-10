@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\Services\GitHubServiceInterface as GitHubService;
 use App\Interfaces\Services\YoServiceInterface     as YoService;
+use App\Http\Requests\RegisterUserRequest;
 
 /**
  * ajaxによるリクエストをさばく
@@ -49,7 +50,7 @@ class AjaxController extends Controller
      *
      * @return Illuminate\Http\JsonResponse $json
      */
-    public function registerUser()
+    public function registerUser(RegisterUserRequest $request)
     {
         $yoName  = \Input::get('yo_name');
         $gitName = \Input::get('git_name');
