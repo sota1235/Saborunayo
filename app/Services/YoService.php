@@ -29,7 +29,7 @@ class YoService extends Service implements YoServiceInterface
      */
     public function sendYo()
     {
-        $apiUrl = $this->apiBaseUrl.'/yoall';
+        $apiUrl = $this->apiBaseUrl.'/yoall/';
 
         // POST /yoall/
         try {
@@ -52,6 +52,22 @@ class YoService extends Service implements YoServiceInterface
      */
     public function addUser($userName)
     {
+        $apiUrl = $this->apiBaseUrl.'/yo/';
+
+        // POST /yoall/
+        try {
+            $this->getHttpClient()->request(
+                'POST',
+                $apiUrl,
+                [
+                    'api_token' => $this->apiKey,
+                    'username'  => $userName,
+                ]
+            );
+            Log::info(__FILE__.__function__.__line__.'Send yo to'.$userName);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            \Log::error(__FILE__.__function__.__line__.'Send Yo to '.$userName.' failed');
+        }
     }
 
     /**
