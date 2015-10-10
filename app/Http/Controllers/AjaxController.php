@@ -33,8 +33,12 @@ class AjaxController extends Controller
      *
      * @return Illuminate\Http\JsonResponse $json
      */
-    public function checkGitHubName()
+    public function checkGitHubName(Request $request)
     {
+        $this->validate($request, [
+            'git_name' => 'required|string|max:1024',
+        ]);
+
         $userName = \Input::get('git_name');
 
         // judge user name exists in github
