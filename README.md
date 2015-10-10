@@ -33,6 +33,16 @@ Build javascript.
 $ gulp
 ```
 
+Copy `.env.example` and edit it for your enviroment.
+
+```
+$ cp .env.example .env
+```
+
+You need some API keys.
+
+- [Yo API](https://dashboard.justyo.co)
+
 ### Contribution
 
 ### Licence
