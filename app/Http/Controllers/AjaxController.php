@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\Services\GitHubServiceInterface as GitHubService;
 use App\Interfaces\Services\YoServiceInterface     as YoService;
 use App\Http\Requests\RegisterUserRequest;
+use Illuminate\Http\Request;
 
 /**
  * ajaxによるリクエストをさばく
