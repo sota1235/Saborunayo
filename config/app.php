@@ -144,6 +144,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\Models\UserModelProvider::class,
         App\Providers\Services\GitHubServiceProvider::class,
         App\Providers\Services\YoServiceProvider::class,
     ],

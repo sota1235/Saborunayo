@@ -9,18 +9,19 @@ interface UserModelInterface
     /**
      * ユーザを登録する
      *
-     * @param string $userName
+     * @param string $gitHubName
+     * @param string $yoName
      *
      * @return int $result
      */
-    public function insertUser($userName);
+    public function insertUser($gitHubName, $yoName);
 
     /**
      * ユーザを削除する
      *
-     * @param string $userName
+     * @param string $userId
      *
      * @return int $result
      */
-    public function deleteUser($userName);
+    public function deleteUser($userId);
 }
