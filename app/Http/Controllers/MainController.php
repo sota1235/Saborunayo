@@ -9,13 +9,13 @@ namespace App\Http\Controllers;
  */
 class MainController extends Controller
 {
-  /**
-   * メインページのviewを返す
-   *
-   * @return view
-   */
-  public function index()
-  {
-    return view('index');
-  }
+    /**
+     * メインページのviewを返す
+     *
+     * @return view
+     */
+    public function index()
+    {
+        return view('index');
+    }
 }
