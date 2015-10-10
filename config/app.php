@@ -145,6 +145,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\Services\GitHubServiceProvider::class,
+        App\Providers\Services\YoServiceProvider::class,
     ],
 
     /*

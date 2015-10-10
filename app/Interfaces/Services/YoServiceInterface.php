@@ -2,8 +2,10 @@
 /**
  * Yo APIと通信するクラス
  */
+namespace App\Interfaces\Services;
 
-interface YoServiceInterface {
+interface YoServiceInterface
+{
   /**
    * 登録済みユーザ全員にYoを送る
    *
