@@ -8,7 +8,8 @@
  *  sota1235
  */
 
-var $ = require('jquery');
+var $       = require('jquery');
+var Promise = require('es6-promise').Promise;
 
 export default class Ajax {
   constructor(url) {
@@ -22,13 +23,18 @@ export default class Ajax {
  }
 
   request (data) {
-    $.ajax({
-      url: this.url,
-      data: data,
-      success: (res) => {
-        return res;
-      },
-      type: 'POST'
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: this.url,
+        data: data,
+        success: (res) => {
+          resolve(res);
+        },
+        error: (error) => {
+          reject(error);
+        },
+        type: 'POST'
+      });
     });
   }
 }
