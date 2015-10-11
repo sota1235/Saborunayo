@@ -36,7 +36,7 @@ class YoService extends Service implements YoServiceInterface
             $this->getHttpClient()->request(
                 'POST',
                 $apiUrl,
-                ['api_token' => $this->apiKey]
+                [ 'form_params' => ['api_token' => $this->apiKey] ]
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             \Log::error(__FILE__.' '.__function__.' '.__line__.'Send Yo for all user failed');
@@ -60,8 +60,10 @@ class YoService extends Service implements YoServiceInterface
                 'POST',
                 $apiUrl,
                 [
-                    'api_token' => $this->apiKey,
-                    'username'  => $userName,
+                    'form_params' => [
+                        'api_token' => $this->apiKey,
+                        'username'  => $userName,
+                    ]
                 ]
             );
             \Log::info(__FILE__.' '.__function__.' '.__line__.' Send yo to'.$userName);
