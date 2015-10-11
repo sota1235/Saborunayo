@@ -24,7 +24,8 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Interfaces\Services\UserServiceInterface', function($app) {
-            return new UserService();
+            $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+            return new UserService($userModel);
         });
     }
 }

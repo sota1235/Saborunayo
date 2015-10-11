@@ -5,12 +5,24 @@
 namespace App\Services;
 
 use App\Interfaces\Services\UserServiceInterface;
+use App\Interfaces\Models\UserModelInterface as UserModel;
 
 /**
  * ユーザ情報を制御するサービスクラス
  */
 class UserService extends Service implements UserServiceInterface
 {
+    /** @var App\Interfaces\Models\UserModelInterface */
+    protected $userModel;
+
+    /**
+     * constructor
+     */
+    public function __construct(UserModel $userModel)
+    {
+        $this->userModel;
+    }
+
     /**
      * ユーザを登録する
      *

@@ -23,7 +23,7 @@ class UserModelProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\Models\UserModel', function($app) {
+        $this->app->bind('App\Interfaces\Models\UserModelInterface', function($app) {
             return new UserModel();
         });
     }
