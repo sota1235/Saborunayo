@@ -30,7 +30,7 @@ interface UserModelInterface
      *
      * @param string $gitHubName
      *
-     * @return int $userId
+     * @return int $userId | null
      */
     public function getIdByGitHubName($gitHubName);
 }

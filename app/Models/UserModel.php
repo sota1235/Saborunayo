@@ -57,9 +57,17 @@ class UserModel extends Model implements UserModelInterface
      *
      * @param string $gitHubName
      *
-     * @return int $userId
+     * @return int $userId | null
      */
     public function getIdByGitHubName($gitHubName)
     {
+        $user = DB::table($this->table)
+            ->where('github_name', $gitHubName)
+            ->first();
+
+        if (!$user) {
+            return null;
+        }
+        return $user->id;
     }
 }
