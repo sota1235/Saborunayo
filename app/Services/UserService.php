@@ -33,6 +33,8 @@ class UserService extends Service implements UserServiceInterface
      */
     public function registerUser($gitName, $yoName)
     {
+        $result = $this->UserModel->insertUser($gitName, $yoName);
+        return $result ? true : false;
     }
 
     /**
