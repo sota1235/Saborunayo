@@ -147,6 +147,7 @@ return [
         App\Providers\Models\UserModelProvider::class,
         App\Providers\Services\GitHubServiceProvider::class,
         App\Providers\Services\YoServiceProvider::class,
+        App\Providers\Services\UserServiceProvider::class,
     ],
 
     /*
