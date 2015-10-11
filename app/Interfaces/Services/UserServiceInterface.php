@@ -9,19 +9,19 @@ interface UserServiceInterface
     /**
      * ユーザを登録する
      *
-     * @param string $gitName
+     * @param string $gitHubName
      * @param string $yoName
      *
      * @return bool $result
      */
-    public function registerUser($gitName, $yoName);
+    public function registerUser($gitHubName, $yoName);
 
     /**
      * ユーザを削除する
      *
-     * @param string $gitName
+     * @param string $gitHubName
      *
      * @return bool $result
      */
-    public function dropUser($gitName);
+    public function dropUser($gitHubName);
 }
