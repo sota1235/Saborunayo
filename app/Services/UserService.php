@@ -46,5 +46,8 @@ class UserService extends Service implements UserServiceInterface
      */
     public function dropUser($gitName)
     {
+        $userId = $this->userModel->getIdByGitHubName($gitName);
+        $result = $this->UserModel->deleteUser($userId);
+        return $result ? true : false;
     }
 }
