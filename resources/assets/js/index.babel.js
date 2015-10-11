@@ -23,6 +23,11 @@ $(() => {
     $gitNameStatus.css('color', isValid ? 'lightgreen' : 'red');
   };
 
+  let checkStatus = () => {
+    $gitNameStatus.text('now checking your GitHub name...');
+    $gitNameStatus.css('color', 'blue');
+  };
+
   // parse JSON response and judge it is success
   let checkJson = (json) => {
     return json.status === 'success';
@@ -32,6 +37,7 @@ $(() => {
   // watch and check GitHub user name
   $gitName.change(() => {
     console.log('Debug: text box changed');
+    checkStatus();
     gitCheckAjax.request({ git_name: $gitName.val() })
       .then((result) => {
         return checkJson(result);
