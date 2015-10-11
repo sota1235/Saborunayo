@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\Services\GitHubServiceInterface as GitHubService;
 use App\Interfaces\Services\YoServiceInterface     as YoService;
+use App\Interfaces\Services\UserServiceInterface   as UserService;
 use App\Http\Requests\RegisterUserRequest;
 use Illuminate\Http\Request;
 
@@ -20,13 +21,17 @@ class AjaxController extends Controller
     /** @var App\Interfaces\Services\YoServiceInteface */
     protected $yoService;
 
+    /** @var App\Interfaces\Services\UserServiceInteface */
+    protected $userService;
+
     /**
      * constructor
      */
-    public function __construct(GitHubService $gitHubService, YoService $yoService)
+    public function __construct(GitHubService $gitHubService, YoService $yoService, UserService $userService)
     {
         $this->gitHubService = $gitHubService;
         $this->yoService     = $yoService;
+        $this->UserService   = $userService;
     }
 
     /**
@@ -62,8 +67,8 @@ class AjaxController extends Controller
 
         // send Yo
         if ($this->yoService->addUser($yoName)) {
-            // TODO: register user info
-            return $this->statusJson(true);
+            $result = $this->userService->registerUser($gitName, $yoName);
+            return $this->statusJson($result ? true : false);
         } else {
             return $this->statusJson(false);
         }
