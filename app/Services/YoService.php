@@ -39,7 +39,7 @@ class YoService extends Service implements YoServiceInterface
                 ['api_token' => $this->apiKey]
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            \Log::error(__FILE__.__function__.__line__.'Send Yo for all user failed');
+            \Log::error(__FILE__.' '.__function__.' '.__line__.'Send Yo for all user failed');
         }
     }
 
@@ -64,10 +64,10 @@ class YoService extends Service implements YoServiceInterface
                     'username'  => $userName,
                 ]
             );
-            \Log::info(__FILE__.__function__.__line__.'Send yo to'.$userName);
+            \Log::info(__FILE__.' '.__function__.' '.__line__.' Send yo to'.$userName);
             return true;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            \Log::error(__FILE__.__function__.__line__.'Send Yo to '.$userName.' failed');
+            \Log::error(__FILE__.' '.__function__.' '.__line__.' Send Yo to '.$userName.' failed');
             return false;
         }
     }
