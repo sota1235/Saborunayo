@@ -18,8 +18,9 @@ $(() => {
 
   /* Functions */
   // draw GitHub user name status
-  let showStatus = (status) => {
+  let showStatus = (status, isValid) => {
     $gitNameStatus.text(status);
+    $gitNameStatus.css('color', isValid ? 'lightgreen' : 'red');
   };
 
   // parse JSON response and judge it is success
@@ -36,7 +37,7 @@ $(() => {
         return checkJson(result);
       })
       .then((result) => {
-        showStatus(result ? 'user name is valid' : 'invalid user name');
+        showStatus(result ? 'user name is valid' : 'invalid user name', result);
       })
       .catch(error => console.log(error));
   });
