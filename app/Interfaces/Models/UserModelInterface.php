@@ -24,4 +24,13 @@ interface UserModelInterface
      * @return int $result
      */
     public function deleteUser($userId);
+
+    /**
+     * GitHub名からIDを取得
+     *
+     * @param string $gitHubName
+     *
+     * @return int $userId
+     */
+    public function getIdByGitHubName($gitHubName);
 }
