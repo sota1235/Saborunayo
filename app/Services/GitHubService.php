@@ -61,7 +61,7 @@ class GitHubService extends Service implements GitHubServiceInterface
         // parse response body
         $dom = HtmlDomParser::str_get_html($body);
         $elms = $dom->find('rect[class=day]');
-        return (string)$elms[0];
+        return (string)$elms[0]->fill === '#eeeeee';
     }
 
     /**
@@ -73,6 +73,6 @@ class GitHubService extends Service implements GitHubServiceInterface
      */
     protected function getGitHubUrl($userName)
     {
-         return 'https://github.com/'.$userName;
+         return 'https://github.com/users/'.$userName.'/contributions';
     }
 }
