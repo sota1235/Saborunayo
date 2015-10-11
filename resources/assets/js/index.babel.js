@@ -11,6 +11,7 @@ $(() => {
   let $gitName       = $('#github_name');
   let $yoName        = $('#yo_name');
   let $gitNameStatus = $('.git_status');
+  let $submitButton  = $('#register');
 
   let appUrl = location.protocol + '//' + location.host;
   let gitCheckAjax = new Ajax(appUrl + '/check/git');
@@ -46,5 +47,26 @@ $(() => {
         showStatus(result ? 'user name is valid' : 'invalid user name', result);
       })
       .catch(error => console.log(error));
+  });
+
+  // register user
+  $submitButton.click(() => {
+    console.log('Debug: post request to register user');
+    let data = {
+      git_name: $gitName.val(),
+      yo_name : $yoName.val()
+    };
+    registerAjax.request(data)
+      .then((result) => {
+        return checkJson(result);
+      })
+      .then((result) => {
+        alert(result ? 'Register successed!!' : 'Register failed..');
+        return false;
+      })
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
   });
 });

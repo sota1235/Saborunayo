@@ -3,19 +3,17 @@
 @section('body')
 <h1>Welcome to SaborunaYo!</h1>
 
-<form method="POST">
-  <label>
-    GitHub name:
-    <input type="text" id="github_name" placeholder="Enter your GitHub name" required>
-  </label>
-  <div class="status">Status: <span class="git_status"></span></div>
-  <br />
-  <label>
-    Yo name:
-    <input type="text" id="yo_name" placeholder="Enter your Yo name" required>
-  </label>
-  <br />
-  <input type="submit" id="register">
-</form>
+<label>
+  GitHub name:
+  <input type="text" id="github_name" placeholder="Enter your GitHub name" required>
+</label>
+<div class="status">Status: <span class="git_status"></span></div>
+<br />
+<label>
+  Yo name:
+  <input type="text" id="yo_name" placeholder="Enter your Yo name" required>
+</label>
+<br />
+<button id="register">Register</button>
 
 @stop
