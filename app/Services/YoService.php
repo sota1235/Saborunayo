@@ -68,6 +68,7 @@ class YoService extends Service implements YoServiceInterface
             return true;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             \Log::error(__FILE__.' '.__function__.' '.__line__.' Send Yo to '.$userName.' failed');
+            \Log::error('erro message '.$e->getMessage());
             return false;
         }
     }
