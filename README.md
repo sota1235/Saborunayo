@@ -1,6 +1,8 @@
 Saborunayo
 ====
 
+[![Build Status](https://travis-ci.org/sota1235/Saborunayo.svg)](https://travis-ci.org/sota1235/Saborunayo)
+
 Don't be lazy.
 
 ### Description
