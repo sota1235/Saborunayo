@@ -20,7 +20,7 @@ class UserService extends Service implements UserServiceInterface
      */
     public function __construct(UserModel $userModel)
     {
-        $this->userModel;
+        $this->userModel = $userModel;
     }
 
     /**
@@ -33,7 +33,7 @@ class UserService extends Service implements UserServiceInterface
      */
     public function registerUser($gitHubName, $yoName)
     {
-        $result = $this->UserModel->insertUser($gitHubName, $yoName);
+        $result = $this->userModel->insertUser($gitHubName, $yoName);
         return $result ? true : false;
     }
 
@@ -47,7 +47,7 @@ class UserService extends Service implements UserServiceInterface
     public function dropUser($gitHubName)
     {
         $userId = $this->userModel->getIdByGitHubName($gitHubName);
-        $result = $this->UserModel->deleteUser($userId);
+        $result = $this->userModel->deleteUser($userId);
         return $result ? true : false;
     }
 }
