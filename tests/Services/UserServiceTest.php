@@ -41,6 +41,30 @@ class UserServiceTest extends TestCase
     }
 
     /**
+     * test method for dropUser()
+     * dorpping user success
+     */
+    public function testDropUserSuccess()
+    {
+        $this->app->bind($this->userModelName, 'TestDropUserSuccess');
+        $userService = new UserService($this->userModelFactory());
+        // assertion
+        $this->assertTrue($userService->dropUser('hoge'));
+    }
+
+    /**
+     * test method for dropUser()
+     * dorpping user failed
+     */
+    public function testDropUserFailed()
+    {
+        $this->app->bind($this->userModelName, 'TestDropUserFailed');
+        $userService = new UserService($this->userModelFactory());
+        // assertion
+        $this->assertFalse($userService->dropUser('hoge'));
+    }
+
+    /**
      * return UserModel instance from service container
      */
     private function userModelFactory()
@@ -64,4 +88,14 @@ class TestRegisterUserSuccess extends AbstractUserMockClass
 class TestRegisterUserFailed extends AbstractUserMockClass
 {
     public function insertUser($gitHubName, $yoName) { return 0; }
+}
+
+class TestDropUserSuccess extends AbstractUserMockClass
+{
+    public function deleteUser($userId) { return 1; }
+}
+
+class TestDropUserFailed extends AbstractUserMockClass
+{
+    public function deleteUser($userId) { return 0; }
 }
