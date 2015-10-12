@@ -12,6 +12,8 @@ class UserServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->userModelName = 'App\Interfaces\Models\UserModelInterface';
     }
 
     /**
@@ -20,10 +22,8 @@ class UserServiceTest extends TestCase
      */
     public function testRegisterUserSuccess()
     {
-        $this->app->bind('App\Interfaces\Models\UserModelInterface', function () {
-            return new TestRegisterUserSuccess();
-        });
-        $userService = new UserService($this->app->make('App\Interfaces\Models\UserModelInterface'));
+        $this->app->bind($this->userModelName, 'TestRegisterUserSuccess');
+        $userService = new UserService($this->userModelFactory());
         // assertion
         $this->assertTrue($userService->registerUser('hoge', 'moge'));
     }
@@ -34,12 +34,18 @@ class UserServiceTest extends TestCase
      */
     public function testRegisterUserFailed()
     {
-        $this->app->bind('App\Interfaces\Models\UserModelInterface', function () {
-            return new TestRegisterUserFailed();
-        });
-        $userService = new UserService($this->app->make('App\Interfaces\Models\UserModelInterface'));
+        $this->app->bind($this->userModelName, 'TestRegisterUserFailed');
+        $userService = new UserService($this->userModelFactory());
         // assertion
         $this->assertFalse($userService->registerUser('hoge', 'moge'));
+    }
+
+    /**
+     * return UserModel instance from service container
+     */
+    private function userModelFactory()
+    {
+        return $this->app->make($this->userModelName);
     }
 }
 
