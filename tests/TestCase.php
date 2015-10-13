@@ -22,4 +22,20 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    /**
+     * make mock Log for test
+     *
+     */
+    protected function registerTestLogger()
+    {
+        $this->app->bind('log', function ($app) {
+            $logger = new \Illuminate\Log\Writer(
+                new \Monolog\Logger('testing'), $app['events']
+            );
+            (new \Illuminate\Foundation\Bootstrap\ConfigureLogging)
+                ->bootstrap($app);
+            return $logger;
+        });
+    }
 }
