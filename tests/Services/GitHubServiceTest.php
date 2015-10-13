@@ -58,6 +58,20 @@ class GitHubServiceTest extends TestCase
     }
 
     /**
+     * test method for getGitHubUrl
+     */
+    public function testGitHubUrlTest()
+    {
+        $gitHubService = new GitHubService();
+        $method = new ReflectionMethod($gitHubService, 'getGitHubUrl');
+        $method->setAccessible(true);
+        $this->assertEquals(
+            'https://github.com/users/sota1235/contributions',
+            $method->invoke($gitHubService, 'sota1235')
+        );
+    }
+
+    /**
      * make guzzle mock it returns specified Response
      *
      * @param Response $response
