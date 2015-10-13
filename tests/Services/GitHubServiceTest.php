@@ -29,16 +29,45 @@ class GitHubServiceTest extends TestCase
                               ->setMethods(['getHttpClient'])
                               ->getMock();
         // make guzzle mock
-        $mock = new MockHandler([
-            new Response(200),
-        ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
+        $client = $this->guzzleMockFactory(new Response(200));
 
         $gitHubService->expects($this->once())
                       ->method('getHttpClient')
                       ->will($this->returnValue($client));
         // assertion
         $this->assertTrue($gitHubService->isExist('hoge'));
+    }
+
+    /**
+     * test method for isExist
+     * user is exist in GitHub
+     */
+    public function testIsExistFailed()
+    {
+        $gitHubService = $this->getMockBuilder('App\Services\GitHubService')
+                              ->setMethods(['getHttpClient'])
+                              ->getMock();
+        // make guzzle mock
+        $client = $this->guzzleMockFactory(new Response(404));
+
+        $gitHubService->expects($this->once())
+                      ->method('getHttpClient')
+                      ->will($this->returnValue($client));
+        // assertion
+        $this->assertFalse($gitHubService->isExist('hoge'));
+    }
+
+    /**
+     * make guzzle mock it returns specified Response
+     *
+     * @param Response $response
+     *
+     * @return Client
+     */
+    private function guzzleMockFactory(Response $response)
+    {
+        $mock    = new MockHandler([$response]);
+        $handler = HandlerStack::create($mock);
+        return new Client(['handler' => $handler]);
     }
 }
