@@ -24,11 +24,26 @@ class AjaxControllerTest extends TestCase
     public function testCheckGitHubName()
     {
         // replace GitHubService with MockClass
-        $this->app->bind(\App\Interfaces\Services\GitHubService::class, 'testCheckGitHubName');
+        $this->app->bind('App\Interfaces\Services\GitHubServiceInterface', 'testCheckGitHubName');
         // assertion
         $this->post('/check/git', ['git_name' => 'sota'])
              ->seeJson([
                  'status' => 'success',
+             ]);
+    }
+
+    /**
+     * test method for checkGitHubName
+     * return failed status
+     */
+    public function testCheckGitHubNameFailed()
+    {
+        // replace GitHubService with MockClass
+        $this->app->bind('App\Interfaces\Services\GitHubServiceInterface', 'testCheckGitHubNameFailed');
+        // assertion
+        $this->post('/check/git', ['git_name' => 'soke'])
+             ->seeJson([
+                 'status' => 'failed',
              ]);
     }
 }
@@ -42,4 +57,9 @@ abstract class GitHubServiceMock implements \App\Interfaces\Services\GitHubServi
 class testCheckGitHubName extends GitHubServiceMock
 {
     public function isExist($userName) { return true; }
+}
+
+class testCheckGitHubNameFailed extends GitHubServiceMock
+{
+    public function isExist($userName) { return false; }
 }
