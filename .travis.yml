@@ -11,8 +11,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - DB_CONNECTOIN='test'
-  - sqlite3 storage/database/database_test.sqlite .database
+  - DB_CONNECTOIN='travis'
   - phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml
 
 after_script:
