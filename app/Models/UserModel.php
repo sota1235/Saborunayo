@@ -58,23 +58,4 @@ class UserModel extends Model implements UserModelInterface
             ->delete();
         return $result;
     }
-
-    /**
-     * GitHub名からIDを取得
-     *
-     * @param string $gitHubName
-     *
-     * @return int $userId | null
-     */
-    public function getIdByGitHubName($gitHubName)
-    {
-        $user = DB::table($this->table)
-            ->where('github_name', $gitHubName)
-            ->first();
-
-        if (!$user) {
-            return null;
-        }
-        return $user->id;
-    }
 }
