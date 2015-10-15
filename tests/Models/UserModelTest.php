@@ -52,4 +52,39 @@ class UserModelTest extends TestCase
         $this->assertNotFalse(strpos(file_get_contents($path), 'Insert user failed'));
         $this->assertEquals($result, 0);
     }
+
+    /**
+     * test method for deleteUser
+     * delete user success
+     */
+    public function testDeleteUser()
+    {
+        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+
+        // insert data to delete
+        $result = $userModel->insertUser('soke', 'hoge');
+        // assertion
+        $this->assertEquals($result, 1);
+        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
+
+        // delete data
+        $result = $userModel->deleteUser('soke');
+        // assertion
+        $this->assertEquals($result, 1);
+        $this->missingFromDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
+    }
+
+    /**
+     * test method for deleteUser
+     * delete user failed (delete non exist user)
+     */
+    public function testDeleteUserFailed()
+    {
+        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+
+        // delete data
+        $result = $userModel->deleteUser('soke');
+        // assertion
+        $this->assertEquals($result, 0);
+    }
 }
