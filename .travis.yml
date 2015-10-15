@@ -8,10 +8,10 @@ env:
 
 before_script:
   - composer install --dev --no-interaction --prefer-source
-  - php artisan migrate --database=test --force
 
 script:
   - mkdir -p build/logs
+  - DB_CONNECTOIN='test'
   - phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml
 
 after_script:
