@@ -27,18 +27,19 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         /* Services */
-        $this->app->bind(App\Interfaces\Services\GitHubServiceInterface::class,
-            App\Services\GitHubService::class
+        $this->app->bind(\App\Interfaces\Services\GitHubServiceInterface::class,
+            \App\Services\GitHubService::class
         );
-        $this->app->bind(App\Interfaces\Services\UserServiceInterface::class,
-            App\Services\UserService::class
-        );
-        $this->app->bind(App\Interfaces\Services\YoServiceInterface::class,
-            App\Services\YoService::class
+        $this->app->bind('\App\Interfaces\Services\UserServiceInterface', function ($app) {
+            $userModel = $app->make('App\Interfaces\Models\UserModelInterface');
+            return new \App\Services\UserService($userModel);
+        });
+        $this->app->bind(\App\Interfaces\Services\YoServiceInterface::class,
+            \App\Services\YoService::class
         );
         /* Models */
-        $this->app->bind(App\Interfaces\Models\UserModelInterface::class,
-            App\Models\UserModel::class
+        $this->app->bind(\App\Interfaces\Models\UserModelInterface::class,
+            \App\Models\UserModel::class
         );
     }
 }
