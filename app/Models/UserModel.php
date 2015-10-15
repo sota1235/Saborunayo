@@ -30,10 +30,17 @@ class UserModel extends Model implements UserModelInterface
      */
     public function insertUser($gitHubName, $yoName)
     {
-        $result = DB::table($this->table)->insert([
-            'github_name' => $gitHubName,
-            'yo_name'     => $yoName,
-        ]);
+        try {
+            $result = DB::table($this->table)->insert([
+                'github_name' => $gitHubName,
+                'yo_name'     => $yoName,
+            ]);
+        } catch (\PDOException $e) {
+            \Log::error(
+                'Insert user failed: error - '.$e->getMessage().' user - '.$gitHubName
+            );
+            return 0;
+        }
         return $result;
     }
 
