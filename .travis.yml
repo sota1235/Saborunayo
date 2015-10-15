@@ -8,6 +8,7 @@ env:
 
 before_script:
   - composer install --dev --no-interaction --prefer-source
+  - php artisan migrate --database=test
 
 script:
   - mkdir -p build/logs
