@@ -38,6 +38,7 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="DB_DATABASE" value="test" />
     </php>
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" />
