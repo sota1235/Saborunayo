@@ -19,11 +19,11 @@ interface UserModelInterface
     /**
      * ユーザを削除する
      *
-     * @param string $userId
+     * @param string $gitHubName
      *
      * @return int $result
      */
-    public function deleteUser($userId);
+    public function deleteUser($gitHubName);
 
     /**
      * GitHub名からIDを取得

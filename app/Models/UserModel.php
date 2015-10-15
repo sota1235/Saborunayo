@@ -47,14 +47,14 @@ class UserModel extends Model implements UserModelInterface
     /**
      * ユーザを削除する
      *
-     * @param int $userId
+     * @param string $gitHubName
      *
      * @return int $result
      */
-    public function deleteUser($userId)
+    public function deleteUser($gitHubName)
     {
         $result = DB::table($this->table)
-            ->where('id', $userId)
+            ->where('github_name', $gitHubName)
             ->delete();
         return $result;
     }
