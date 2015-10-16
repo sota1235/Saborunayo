@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="bootstrap/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false">
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./app/</directory>
+            <exclude>
+                <directory>./app/Interfaces/</directory>
+                <directory>./app/Providers/</directory>
+                <directory>./app/Http/Requests</directory>
+                <file>./app/Console/Commands/Inspire.php</file>
+                <file>./app/Console/Kernel.php</file>
+                <file>./app/Exceptions/Handler.php</file>
+                <file>./app/Http/Kernel.php</file>
+                <file>./app/Http/Controllers/Controller.php</file>
+                <file>./app/Http/Middleware/EncryptCookies.php</file>
+                <file>./app/Http/Middleware/VerifyCsrfToken.php</file>
+                <file>./app/Jobs/Job.php</file>
+                <file>./app/Events/Event.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="DB_CONNECTION" value="travis" />
+    </php>
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" />
+        <log type="coverage-clover" target="tests/build/clover.xml"/>
+    </logging>
+</phpunit>
