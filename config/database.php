@@ -60,7 +60,7 @@ return [
 
         'travis' => [
             'driver'   => 'sqlite',
-            'database' => ':memory',
+            'database' => ':memory:',
             'prefix'   => '',
         ],
 
