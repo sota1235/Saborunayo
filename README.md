@@ -1,7 +1,7 @@
 Saborunayo
 ====
 
-[![Build Status](https://travis-ci.org/sota1235/Saborunayo.svg)](https://travis-ci.org/sota1235/Saborunayo) [![Coverage Status](https://coveralls.io/repos/sota1235/Saborunayo/badge.svg?branch=master&service=github)](https://coveralls.io/github/sota1235/Saborunayo?branch=master)
+[![Build Status](https://travis-ci.org/sota1235/Saborunayo.svg)](https://travis-ci.org/sota1235/Saborunayo) [![Coverage Status](https://coveralls.io/repos/sota1235/Saborunayo/badge.svg?branch=master&service=github)](https://coveralls.io/github/sota1235/Saborunayo?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sota1235/Saborunayo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sota1235/Saborunayo/?branch=master)
 
 Don't be lazy.
 
