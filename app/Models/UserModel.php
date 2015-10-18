@@ -12,6 +12,9 @@ use DB;
  */
 class UserModel extends Model implements UserModelInterface
 {
+    /** @var string */
+    protected $table;
+
     /**
      * Constructor
      */

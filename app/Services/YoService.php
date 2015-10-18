@@ -11,6 +11,10 @@ use App\Interfaces\Services\YoServiceInterface;
  */
 class YoService extends Service implements YoServiceInterface
 {
+    /** @var string */
+    protected $apiKey;
+    protected $apiBaseUrl;
+
     /**
      * constructor
      */
