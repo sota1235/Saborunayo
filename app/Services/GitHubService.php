@@ -5,18 +5,22 @@
 namespace App\Services;
 
 use App\Interfaces\Services\GitHubServiceInterface;
-use Sunra\PhpSimple\HtmlDomParser;
+use Goutte\Client;
 
 /**
  * GitHub上での情報をチェックする
  */
 class GitHubService extends Service implements GitHubServiceInterface
 {
+    /** @var Goutte\Client */
+    protected $goutteClient;
+
     /**
      * constructor
      */
-    public function __construct()
+    public function __construct(Client $client)
     {
+        $this->goutteClient = $client;
     }
 
     /**
@@ -53,15 +57,16 @@ class GitHubService extends Service implements GitHubServiceInterface
     public function checkContribution($userName)
     {
         // Getting user page souce
-        $body = $this->getHttpClient()->request(
-            'GET',
-            $this->getGitHubUrl($userName)
-        )->getBody()->getContents();
+        $body = $this->goutteClient->request('GET', $this->getGitHubUrl($userName));
 
         // parse response body
-        $dom = HtmlDomParser::str_get_html($body);
-        $elms = $dom->find('rect[class=day]');
-        return (string)$elms[0]->fill === '#eeeeee';
+        $contribution = null;
+        $body->filter('rect')->last()->each(function ($name) {
+            $contribution = $name->attr('fill');
+        });
+
+        // #eeeeeeはSaboってる
+        return $contribution !== '#eeeeee';
     }
 
     /**

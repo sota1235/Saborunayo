@@ -27,9 +27,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         /* Services */
-        $this->app->bind(\App\Interfaces\Services\GitHubServiceInterface::class,
-            \App\Services\GitHubService::class
-        );
+        $this->app->bind('\App\Interfaces\Services\GitHubServiceInterface', function ($app) {
+            $goutte = $app->make('\Goutte\Client');
+            return new \App\Services\GitHubService($goutte);
+        });
         $this->app->bind('\App\Interfaces\Services\UserServiceInterface', function ($app) {
             $userModel = $app->make('App\Interfaces\Models\UserModelInterface');
             return new \App\Services\UserService($userModel);
@@ -41,5 +42,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\Models\UserModelInterface::class,
             \App\Models\UserModel::class
         );
+        /* Libraries */
+        $this->app->bind('\Goutte\Client', function ($app) {
+            return new \Goutte\Client();
+        });
     }
 }
