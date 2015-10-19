@@ -17,6 +17,7 @@ class GitHubServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->serviceName = '\App\Interfaces\Services\GitHubServiceInterface';
     }
 
     /**
@@ -25,16 +26,10 @@ class GitHubServiceTest extends TestCase
      */
     public function testIsExistSuccess()
     {
-        $gitHubService = $this->getMockBuilder('App\Services\GitHubService')
-                              ->setMethods(['getHttpClient'])
-                              ->getMock();
-        // make guzzle mock
-        $client = $this->guzzleMockFactory(new Response(200));
-
-        $gitHubService->expects($this->once())
-                      ->method('getHttpClient')
-                      ->will($this->returnValue($client));
+        // replace class with mock
+        $this->app->bind($this->serviceName, 'TestIsExistSuccess');
         // assertion
+        $gitHubService = $this->app->make($this->serviceName);
         $this->assertTrue($gitHubService->isExist('hoge'));
     }
 
@@ -44,16 +39,10 @@ class GitHubServiceTest extends TestCase
      */
     public function testIsExistFailed()
     {
-        $gitHubService = $this->getMockBuilder('App\Services\GitHubService')
-                              ->setMethods(['getHttpClient'])
-                              ->getMock();
-        // make guzzle mock
-        $client = $this->guzzleMockFactory(new Response(404));
-
-        $gitHubService->expects($this->once())
-                      ->method('getHttpClient')
-                      ->will($this->returnValue($client));
+        // replace class with mock
+        $this->app->bind($this->serviceName, 'TestIsExistFailed');
         // assertion
+        $gitHubService = $this->app->make($this->serviceName);
         $this->assertFalse($gitHubService->isExist('hoge'));
     }
 
@@ -62,7 +51,7 @@ class GitHubServiceTest extends TestCase
      */
     public function testGitHubUrlTest()
     {
-        $gitHubService = new GitHubService();
+        $gitHubService = $this->app->make($this->serviceName);
         $method = new ReflectionMethod($gitHubService, 'getGitHubUrl');
         $method->setAccessible(true);
         $this->assertEquals(
@@ -70,18 +59,29 @@ class GitHubServiceTest extends TestCase
             $method->invoke($gitHubService, 'sota1235')
         );
     }
+}
 
-    /**
-     * make guzzle mock it returns specified Response
-     *
-     * @param Response $response
-     *
-     * @return Client
-     */
-    private function guzzleMockFactory(Response $response)
+abstract class guzzleMockFactory extends \App\Services\GitHubService
+{
+    protected function getGuzzleMock(Response $response)
     {
         $mock    = new MockHandler([$response]);
         $handler = HandlerStack::create($mock);
         return new Client(['handler' => $handler]);
+    }
+}
+
+class TestIsExistSuccess extends guzzleMockFactory
+{
+    public function getHttpClient()
+    {
+        return $this->getGuzzleMock(new Response(200));
+    }
+}
+class TestIsExistFailed extends guzzleMockFactory
+{
+    public function getHttpClient()
+    {
+        return $this->getGuzzleMock(new Response(404));
     }
 }
