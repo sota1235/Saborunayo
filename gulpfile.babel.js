@@ -41,4 +41,9 @@ gulp.task('script', () => {
   .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('default', ['script']);
+gulp.task('watch', () => {
+  gulp.watch('./resources/assets/sass/**/*.sass', ['sass']);
+  gulp.watch('./resources/assets/js/**/*.js');
+});
+
+gulp.task('default', ['script', 'sass']);
