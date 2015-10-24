@@ -8,7 +8,6 @@
       <input type="text" id="github_name" placeholder="GitHub name" required>
       <div class="status"><span class="git_status"></span></div>
       <input type="text" id="yo_name" placeholder="Yo name" required>
-      <br />
       <button id="register">Register</button>
     </div>
   </div>
