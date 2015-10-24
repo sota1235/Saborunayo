@@ -5,9 +5,15 @@
   <div>
     <h1>SaborunaYo</h1>
     <div class="sa_form">
-      <input type="text" id="github_name" placeholder="GitHub name" required>
-      <div class="status"><span class="git_status"></span></div>
-      <input type="text" id="yo_name" placeholder="Yo name" required>
+      <div class="field">
+        <div class="status">
+          <p class="git_status"></p>
+        </div>
+        <input type="text" id="github_name" placeholder="GitHub name" required>
+      </div>
+      <div class="field">
+        <input type="text" id="yo_name" placeholder="Yo name" required>
+      </div>
       <button id="register">Register</button>
     </div>
   </div>

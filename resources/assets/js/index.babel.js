@@ -25,7 +25,7 @@ $(() => {
   };
 
   let checkStatus = () => {
-    $gitNameStatus.text('now checking your GitHub name...');
+    $gitNameStatus.text('Checking...');
     $gitNameStatus.css('color', 'blue');
   };
 
@@ -44,7 +44,7 @@ $(() => {
         return checkJson(result);
       })
       .then((result) => {
-        showStatus(result ? 'user name is valid' : 'invalid user name', result);
+        showStatus(result ? 'User name OK!!' : 'invalid user name', result);
       })
       .catch(error => console.log(error));
   });

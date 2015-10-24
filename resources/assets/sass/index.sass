@@ -15,16 +15,29 @@
   .sa_form
     display: inline-block
 
-    input[type=text]
-      background-color: $main_color
-      color: $base_color
-      border: none
-      display: block
-      font-size: 1.5em
-      font-weight: 700
-      padding: 0.6em 1em
-      margin-bottom: 0.5em
-      width: 100%
+    .field
+      input[type=text]
+        background-color: $main_color
+        color: $base_color
+        border: none
+        display: block
+        font-size: 1.5em
+        font-weight: 700
+        padding: 0.6em 1em
+        margin-bottom: 0.5em
+        width: 100%
+
+      .status
+        position: absolute
+        display: table
+        left: 850px
+        min-height: 56px
+        font-size: 15px
+        font-weight: 700
+
+        .git_status
+          display: table-cell
+          vertical-align: middle
 
     button#register
       background-color: $accent_color
