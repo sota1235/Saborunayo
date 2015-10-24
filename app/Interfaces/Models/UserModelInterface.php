@@ -7,6 +7,13 @@ namespace App\Interfaces\Models;
 interface UserModelInterface
 {
     /**
+     * 有効な登録済みユーザを取得
+     *
+     * @return array
+     */
+    public function getUsers();
+
+    /**
      * ユーザを登録する
      *
      * @param string $gitHubName

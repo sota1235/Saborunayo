@@ -17,6 +17,68 @@ class UserModelTest extends TestCase
     }
 
     /**
+     * test method for getUsers
+     * user exist
+     */
+    public function testGetUsers()
+    {
+        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $mockGName = 'hoge';
+        $mockYName = 'moge';
+        // db setting
+        \DB::table('users')->delete();
+        \DB::table('users')->insert([
+            'github_name' => $mockGName,
+            'yo_name'     => $mockYName
+        ]);
+        // execute
+        $result = $userModel->getUsers();
+        // assertion
+        $this->assertNotEmpty($result);
+        $this->assertEquals($result[0]->github_name, $mockGName);
+        $this->assertEquals($result[0]->yo_name, $mockYName);
+        // settle DB
+        \DB::table('users')->delete();
+    }
+
+    /**
+     * test method for getUsers
+     * user empty
+     */
+    public function testGetNoUsers()
+    {
+        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        // db setting
+        \DB::table('users')->delete();
+        // execute
+        $result = $userModel->getUsers();
+        // assertion
+        $this->assertEmpty($result);
+    }
+
+    /**
+     * test method for getUsers
+     * deleted user not exist
+     */
+    public function testNotGetDeletedUsers()
+    {
+        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        // db setting
+        $mockData = [
+            'github_name'  => 'hoge',
+            'yo_name'      => 'moge',
+            'deleted_flag' => 1
+        ];
+        \DB::table('users')->delete();
+        \DB::table('users')->insert($mockData);
+        // execute
+        $result = $userModel->getUsers();
+        // assertion
+        $this->seeInDatabase('users', $mockData);
+        $this->assertEmpty($result);
+    }
+
+    /**
      * test method for insertUser
      * insert user success
      */

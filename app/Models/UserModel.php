@@ -24,6 +24,16 @@ class UserModel extends Model implements UserModelInterface
     }
 
     /**
+     * 有効な登録済みユーザを取得
+     *
+     * @return array
+     */
+    public function getUsers()
+    {
+        return DB::table($this->table)->where('deleted_flag', 0)->get();
+    }
+
+    /**
      * ユーザを登録する
      *
      * @param string $gitHubName
