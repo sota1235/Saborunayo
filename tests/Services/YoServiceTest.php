@@ -141,6 +141,79 @@ class YoServiceTest extends TestCase
     }
 
     /**
+     * test method for isExist
+     * yo account exist
+     */
+    public function testIsExistTrue()
+    {
+        // guzzle mock
+        $mockRes = "{ \"exists\": true }";
+        $client = $this->guzzleMockFactory(new Response(200, [], $mockRes));
+        // self mock
+        $yoService = $this->getMockBuilder('App\Services\YoService')
+                          ->setMethods(['getHttpClient'])
+                          ->getMock();
+        $yoService->expects($this->once())
+                  ->method('getHttpClient')
+                  ->will($this->returnValue($client));
+        // assertsion
+        $this->assertTrue($yoService->isExist('hoge'));
+    }
+
+    /**
+     * test method for isExist
+     * yo account not exist
+     */
+    public function testIsExistFalse()
+    {
+        // guzzle mock
+        $mockRes = "{ \"exists\": false }";
+        $client = $this->guzzleMockFactory(new Response(200, [], $mockRes));
+        // self mock
+        $yoService = $this->getMockBuilder('App\Services\YoService')
+                          ->setMethods(['getHttpClient'])
+                          ->getMock();
+        $yoService->expects($this->once())
+                  ->method('getHttpClient')
+                  ->will($this->returnValue($client));
+        // assertsion
+        $this->assertFalse($yoService->isExist('hoge'));
+    }
+
+    /**
+     * test method for isExist
+     * some http error
+     */
+    public function testIsExistHttpFailed()
+    {
+        // guzzle mock
+        $client = $this->guzzleMockFactory(new Response(404));
+        // self mock
+        $yoService = $this->getMockBuilder('App\Services\YoService')
+                          ->setMethods(['getHttpClient'])
+                          ->getMock();
+        $yoService->expects($this->once())
+                  ->method('getHttpClient')
+                  ->will($this->returnValue($client));
+        // log settings
+        $path = base_path('tests/storage/logs/yo.log');
+        \Log::useFiles($path);
+        // mock data
+        $mockUser = 'udon2';
+        // assertsion
+        $this->assertFalse($yoService->isExist($mockUser));
+        $this->assertFileExists($path);
+        $log = file_get_contents($path);
+        $this->assertNotFalse(strpos($log, $mockUser));
+        $this->assertNotFalse(strpos($log, 'Checking Yo Account'));
+        $this->assertNotFalse(strpos($log, 'error message'));
+        // remove log
+        $this->beforeApplicationDestroyed(function() use ($path) {
+            \File::delete($path);
+        });
+    }
+
+    /**
      * make guzzle mock it returns specified Response
      *
      * @param Response $response
