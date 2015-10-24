@@ -117,6 +117,7 @@ abstract class YoServiceMock implements \App\Interfaces\Services\YoServiceInterf
     public function sendYo() {}
     public function addUser($userName) {}
     public function dropUser($userName) {}
+    public function isExist($userName) {}
 }
 
 class testCheckGitHubName extends GitHubServiceMock
