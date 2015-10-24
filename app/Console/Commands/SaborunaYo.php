@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Interfaces\Services\YoServiceInterface as YoService;
+use App\Interfaces\Services\YoServiceInterface     as YoService;
+use App\Interfaces\Services\UserServiceInterface   as UserService;
+use App\Interfaces\Services\GitHubServiceInterface as GitHubService;
 
 class SaborunaYo extends Command
 {
@@ -24,16 +26,24 @@ class SaborunaYo extends Command
     /** @var YoService */
     protected $yoService;
 
+    /** @var UserService */
+    protected $userService;
+
+    /** @var GitHubService */
+    protected $gitHubService;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(YoService $yoService)
+    public function __construct(YoService $yoService, UserService $userService, GitHubService $gitHubService)
     {
         parent::__construct();
-        $this->yoService = $yoService;
-    }
+        $this->yoService     = $yoService;
+        $this->userService   = $userService;
+        $this->gitHubService = $gitHubService;
+   }
 
     /**
      * Execute the console command.
@@ -42,6 +52,13 @@ class SaborunaYo extends Command
      */
     public function handle()
     {
-        $this->yoService->sendYo();
+        $users = $this->userService->getUsers();
+        foreach ($users as $user) {
+            echo 'GitHub name: '.$user->github_name." checking\n";
+            if (!$this->gitHubService->checkContribution($user->github_name)) {
+                $this->yoService->sendYo($user->yo_name);
+                \Log::info('GitHub name: '.$user->github_name.' is lazy person');
+            }
+        }
     }
 }
