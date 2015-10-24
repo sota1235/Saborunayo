@@ -38,7 +38,7 @@ class YoServiceTest extends TestCase
         $path = base_path('tests/storage/logs/yo.log');
         \Log::useFiles($path);
         // assertsion
-        $yoService->sendYoAll();
+        $this->assertTrue($yoService->sendYoAll());
         $this->assertFileExists($path);
         $this->assertNotFalse(strpos(file_get_contents($path), 'success'));
         // remove log
@@ -66,7 +66,7 @@ class YoServiceTest extends TestCase
         $path = base_path('tests/storage/logs/yo.log');
         \Log::useFiles($path);
         // assertsion
-        $yoService->sendYoAll();
+        $this->assertFalse($yoService->sendYoAll());
         $this->assertFileExists($path);
         $this->assertNotFalse(strpos(file_get_contents($path), 'failed'));
         // remove log

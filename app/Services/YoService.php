@@ -29,7 +29,7 @@ class YoService extends Service implements YoServiceInterface
     /**
      * 登録済みユーザ全員にYoを送る
      *
-     * @return void
+     * @return bool
      */
     public function sendYoAll()
     {
@@ -42,9 +42,11 @@ class YoService extends Service implements YoServiceInterface
                 $apiUrl,
                 [ 'form_params' => ['api_token' => $this->apiKey] ]
             );
-            \Log::error(__FILE__.' '.__function__.' '.__line__.' Send Yo for all user success.');
+            \Log::info(__FILE__.' '.__function__.' '.__line__.' Send Yo for all user success.');
+            return true;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             \Log::error(__FILE__.' '.__function__.' '.__line__.' Send Yo for all user failed.');
+            return false;
         }
     }
 

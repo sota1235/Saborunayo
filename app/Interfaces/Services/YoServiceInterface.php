@@ -9,7 +9,7 @@ interface YoServiceInterface
     /**
      * 登録済みユーザ全員にYoを送る
      *
-     * @return void
+     * @return bool
      */
     public function sendYoAll();
 
