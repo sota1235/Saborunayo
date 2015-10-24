@@ -1,6 +1,9 @@
 @extends('layouts.master')
 
 @section('body')
+
+@include('github_ribbon')
+
 <div class="container">
   <div>
     <h1>SaborunaYo</h1>
