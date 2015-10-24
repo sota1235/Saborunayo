@@ -114,8 +114,8 @@ abstract class UserServiceMock implements \App\Interfaces\Services\UserServiceIn
 
 abstract class YoServiceMock implements \App\Interfaces\Services\YoServiceInterface
 {
-    public function sendYo() {}
-    public function addUser($userName) {}
+    public function sendYoAll() {}
+    public function sendYo($userName) {}
     public function dropUser($userName) {}
     public function isExist($userName) {}
 }

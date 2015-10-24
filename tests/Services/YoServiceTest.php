@@ -20,7 +20,7 @@ class YoServiceTest extends TestCase
     }
 
     /**
-     * test method for sendYo
+     * test method for sendYoAll
      * yo successed
      */
     public function testSendYoSuccess()
@@ -38,7 +38,7 @@ class YoServiceTest extends TestCase
         $path = base_path('tests/storage/logs/yo.log');
         \Log::useFiles($path);
         // assertsion
-        $yoService->sendYo();
+        $yoService->sendYoAll();
         $this->assertFileExists($path);
         $this->assertNotFalse(strpos(file_get_contents($path), 'success'));
         // remove log
@@ -48,7 +48,7 @@ class YoServiceTest extends TestCase
     }
 
     /**
-     * test method for sendYo
+     * test method for sendYoAll
      * yo failed
      */
     public function testSendYoFailed()
@@ -66,7 +66,7 @@ class YoServiceTest extends TestCase
         $path = base_path('tests/storage/logs/yo.log');
         \Log::useFiles($path);
         // assertsion
-        $yoService->sendYo();
+        $yoService->sendYoAll();
         $this->assertFileExists($path);
         $this->assertNotFalse(strpos(file_get_contents($path), 'failed'));
         // remove log
@@ -76,7 +76,7 @@ class YoServiceTest extends TestCase
     }
 
     /**
-     * test method for addUser
+     * test method for sendYo
      * yo successed
      */
     public function testAddUserSuccess()
@@ -96,7 +96,7 @@ class YoServiceTest extends TestCase
         // mock data
         $mockUser = 'udon';
         // assertsion
-        $this->assertTrue($yoService->addUser($mockUser));
+        $this->assertTrue($yoService->sendYo($mockUser));
         $this->assertFileExists($path);
         $log = file_get_contents($path);
         $this->assertNotFalse(strpos($log, $mockUser));
@@ -108,7 +108,7 @@ class YoServiceTest extends TestCase
     }
 
     /**
-     * test method for addUser
+     * test method for sendYo
      * yo failed
      */
     public function testAddUserFailed()
@@ -128,7 +128,7 @@ class YoServiceTest extends TestCase
         // mock data
         $mockUser = 'udon';
         // assertsion
-        $this->assertFalse($yoService->addUser($mockUser));
+        $this->assertFalse($yoService->sendYo($mockUser));
         $this->assertFileExists($path);
         $log = file_get_contents($path);
         $this->assertNotFalse(strpos($log, $mockUser));

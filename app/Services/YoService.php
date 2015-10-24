@@ -31,7 +31,7 @@ class YoService extends Service implements YoServiceInterface
      *
      * @return void
      */
-    public function sendYo()
+    public function sendYoAll()
     {
         $apiUrl = $this->apiBaseUrl.'/yoall/';
 
@@ -49,13 +49,13 @@ class YoService extends Service implements YoServiceInterface
     }
 
     /**
-     * ユーザをYo対象リストに登録する
+     * ユーザにYoを送る
      *
      * @param string $userName
      *
-     * @return bool $result
+     * @return bool
      */
-    public function addUser($userName)
+    public function sendYo($userName)
     {
         $apiUrl = $this->apiBaseUrl.'/yo/';
 
