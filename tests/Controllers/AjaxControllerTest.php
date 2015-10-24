@@ -138,7 +138,7 @@ class testRegisterUserUser extends UserServiceMock
 
 class testRegisterUserYo extends YoServiceMock
 {
-    public function addUser($yoName) { return true; }
+    public function sendYo($yoName) { return true; }
 }
 
 class testRegisterUserFailedUser extends UserServiceMock
@@ -148,5 +148,5 @@ class testRegisterUserFailedUser extends UserServiceMock
 
 class testRegisterUserFailedYo extends YoServiceMock
 {
-    public function addUser($yoName) { return false; }
+    public function sendYo($yoName) { return false; }
 }

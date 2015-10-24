@@ -49,7 +49,7 @@ class AjaxController extends Controller
         $gitName = \Input::get('git_name');
 
         // send Yo
-        if ($yoService->addUser($yoName)) {
+        if ($yoService->sendYo($yoName)) {
             $result = $userService->registerUser($gitName, $yoName);
             return $this->statusJson($result ? true : false);
         } else {
