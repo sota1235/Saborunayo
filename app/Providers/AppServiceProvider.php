@@ -35,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
             $userModel = $app->make('App\Interfaces\Models\UserModelInterface');
             return new \App\Services\UserService($userModel);
         });
-        $this->app->bind(\App\Interfaces\Services\YoServiceInterface::class,
-            \App\Services\YoService::class
-        );
+        $this->app->bind('\App\Interfaces\Services\YoServiceInterface', function ($app) {
+            return new \App\Services\YoService();
+        });
         /* Models */
         $this->app->bind(\App\Interfaces\Models\UserModelInterface::class,
             \App\Models\UserModel::class

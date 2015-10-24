@@ -23,6 +23,15 @@ interface YoServiceInterface
     public function addUser($userName);
 
     /**
+     * Yoアカウントが存在するかどうか調べる
+     *
+     * @param string $userName
+     *
+     * @return bool
+     */
+    public function isExist($userName);
+
+    /**
      * ユーザをYo対象リストから削除する
      *
      * @param string $userName

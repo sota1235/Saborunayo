@@ -81,6 +81,34 @@ class YoService extends Service implements YoServiceInterface
     }
 
     /**
+     * Yoアカウントが存在するかどうか調べる
+     *
+     * @param string $userName
+     *
+     * @return bool
+     */
+    public function isExist($userName)
+    {
+        $apiUrl = $this->apiBaseUrl.'/check_username/';
+        $params = http_build_query([
+            'api_token' => $this->apiKey,
+            'username'  => $userName,
+        ]);
+        $requestUrl = $apiUrl.'?'.$params;
+
+        // GET request
+        try {
+            $res = $this->getHttpClient()->request('GET', $requestUrl);
+            $result = json_decode($res->getBody());
+            return $result->exists;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            \Log::error(__FILE__.' '.__function__.' '.__line__.' Checking Yo Account, '.$userName.' failed');
+            \Log::error('error message '.$e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * ユーザをYo対象リストから削除する
      *
      * @param string $userName
