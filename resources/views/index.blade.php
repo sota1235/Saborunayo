@@ -4,19 +4,13 @@
 <div class="container">
   <div>
     <h1>SaborunaYo</h1>
-
-    <label>
-  GitHub name:
-  <input type="text" id="github_name" placeholder="Enter your GitHub name" required>
-  </label>
-  <div class="status">Status: <span class="git_status"></span></div>
-  <br />
-  <label>
-    Yo name:
-    <input type="text" id="yo_name" placeholder="Enter your Yo name" required>
-  </label>
-  <br />
-  <button id="register">Register</button>
+    <div class="sa_form">
+      <input type="text" id="github_name" placeholder="GitHub name" required>
+      <div class="status"><span class="git_status"></span></div>
+      <input type="text" id="yo_name" placeholder="Yo name" required>
+      <br />
+      <button id="register">Register</button>
+    </div>
   </div>
 </div>
 @stop
