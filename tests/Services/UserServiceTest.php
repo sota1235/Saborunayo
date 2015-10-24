@@ -41,6 +41,17 @@ class UserServiceTest extends TestCase
     }
 
     /**
+     * test method for getUsers()
+     */
+    public function testGetUsers()
+    {
+        $this->app->bind($this->userModelName, 'TestGetUsers');
+        $userService = new UserService($this->userModelFactory());
+        // assertion
+        $this->assertEmpty($userService->getUsers());
+    }
+
+    /**
      * test method for dropUser()
      * dorpping user success
      */
@@ -75,9 +86,9 @@ class UserServiceTest extends TestCase
 
 abstract class AbstractUserMockClass implements \App\Interfaces\Models\UserModelInterface
 {
+    public function getUsers() {}
     public function insertUser($gitHubName, $yoName) {}
     public function deleteUser($userId) {}
-    public function getIdByGitHubName($gitHubName) {}
 }
 
 class TestRegisterUserSuccess extends AbstractUserMockClass
@@ -88,6 +99,11 @@ class TestRegisterUserSuccess extends AbstractUserMockClass
 class TestRegisterUserFailed extends AbstractUserMockClass
 {
     public function insertUser($gitHubName, $yoName) { return 0; }
+}
+
+class TestGetUsers extends AbstractUserMockClass
+{
+    public function getUsers() { return []; }
 }
 
 class TestDropUserSuccess extends AbstractUserMockClass

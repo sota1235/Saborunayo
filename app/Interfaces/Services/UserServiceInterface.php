@@ -17,6 +17,13 @@ interface UserServiceInterface
     public function registerUser($gitHubName, $yoName);
 
     /**
+     * 全ユーザの情報を取得
+     *
+     * @return array
+     */
+    public function getUsers();
+
+    /**
      * ユーザを削除する
      *
      * @param string $gitHubName

@@ -109,6 +109,7 @@ abstract class GitHubServiceMock implements \App\Interfaces\Services\GitHubServi
 abstract class UserServiceMock implements \App\Interfaces\Services\UserServiceInterface
 {
     public function registerUser($gitHubName, $yoName) {}
+    public function getUsers() {}
     public function dropUser($gitHubName) {}
 }
 

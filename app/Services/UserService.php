@@ -38,6 +38,16 @@ class UserService extends Service implements UserServiceInterface
     }
 
     /**
+     * 全ユーザの情報を取得
+     *
+     * @return array
+     */
+    public function getUsers()
+    {
+        return $this->userModel->getUsers();
+    }
+
+    /**
      * ユーザを削除する
      *
      * @param string $gitHubName
@@ -46,8 +56,7 @@ class UserService extends Service implements UserServiceInterface
      */
     public function dropUser($gitHubName)
     {
-        $userId = $this->userModel->getIdByGitHubName($gitHubName);
-        $result = $this->userModel->deleteUser($userId);
+        $result = $this->userModel->deleteUser($gitHubName);
         return $result ? true : false;
     }
 }
