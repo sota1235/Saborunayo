@@ -41,4 +41,10 @@ return [
         'redirect'      => env('GITHUB_REDIRECT'),
     ],
 
+    'twilio' => [
+        'from_number' => env('TWILIO_FROM_NUMBER'),
+        'sid'         => env('TWILIO_SID'),
+        'token'       => env('TWILIO_AUTH_TOKEN'),
+     ],
+
 ];
