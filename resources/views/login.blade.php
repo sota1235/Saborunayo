@@ -9,10 +9,12 @@
     <h1>Welcome to SaborunaYo</h1>
     <h3>Let's Signup!!</h3>
     <div class="sa_form">
-      <button id="login">
-        GitHub Login
-        <i class="fa fa-github"></i>
-      </button>
+      <a href="/auth">
+        <button id="login">
+          GitHub Login
+          <i class="fa fa-github"></i>
+        </button>
+      </a>
     </div>
   </div>
 </div>
