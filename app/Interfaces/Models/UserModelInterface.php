@@ -24,6 +24,15 @@ interface UserModelInterface
     public function getUserById($userId, array $columns = ['*']);
 
     /**
+     * GitHub IDからユーザ情報を取得
+     *
+     * @param mixed $gitHubId
+     *
+     * @return array|null
+     */
+    public function getUserByGitHubId($gitHubId);
+
+    /**
      * remember_tokenからユーザを取得
      *
      * @param mixed  $userId
@@ -45,19 +54,9 @@ interface UserModelInterface
     /**
      * ユーザを登録する
      *
-     * @param string $gitHubName
-     * @param int    $phoneNumber
+     * @param int $phoneNumber
      *
      * @return int $result
      */
-    public function insertUser($gitHubName, $phoneNumber);
-
-    /**
-     * ユーザを削除する
-     *
-     * @param string $gitHubName
-     *
-     * @return int $result
-     */
-    public function deleteUser($gitHubName);
+    public function insertUser($phoneNumber);
 }

@@ -47,6 +47,21 @@ class UserModel extends Model implements UserModelInterface
     }
 
     /**
+     * GitHub IDからユーザ情報を取得
+     *
+     * @param mixed $gitHubId
+     *
+     * @return array|null
+     */
+    public function getUserByGitHubId($gitHubId)
+    {
+        return \DB::table($this->table)
+            ->leftJoin('github_informations as gi', 'users.id', '=', 'gi.user_id')
+            ->where('gi.github_id', $gitHubId)
+            ->first();
+    }
+
+    /**
      * remember_tokenからユーザを取得
      *
      * @param mixed  $userId
@@ -76,31 +91,14 @@ class UserModel extends Model implements UserModelInterface
     /**
      * ユーザを登録する
      *
-     * @param string $gitHubName
-     * @param int    $phoneNumber
+     * @param int $phoneNumber
      *
      * @return int $result
      */
-    public function insertUser($gitHubName, $phoneNumber)
+    public function insertUser($phoneNumber)
     {
         return $result = DB::table($this->table)->insert([
-            'github_name'  => $gitHubName,
             'phone_number' => $phoneNumber,
         ]);
-    }
-
-    /**
-     * ユーザを削除する
-     *
-     * @param string $gitHubName
-     *
-     * @return int $result
-     */
-    public function deleteUser($gitHubName)
-    {
-        $result = DB::table($this->table)
-            ->where('github_name', $gitHubName)
-            ->delete();
-        return $result;
     }
 }
