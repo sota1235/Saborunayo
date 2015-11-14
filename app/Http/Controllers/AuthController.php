@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use Laravel\Socialite\Contracts\Factory as SocialiteManager;
+use App\Interfaces\Services\UserServiceInterface as UserService;
 
 /**
  * 認証周りのルーティング処理を行う
@@ -37,11 +38,17 @@ class AuthController extends Controller
      * Handle redirection from GitHub OAuth
      *
      * @param SocialiteManager $socialiteManager
+     * @param UserService      $userService
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function handleGitHubRdirect(SocialiteManager $socialiteManager)
-    {
-        dd($socialiteManager->driver('github')->user());
+    public function handleGitHubRdirect(
+        SocialiteManager $socialiteManager,
+        UserService      $userService
+    ) {
+        $user = $socialiteManager->driver('github')->user();
+        $id = $userService->registerUser($user);
+        \Auth::driver('github')->loginUsingId($id);
+        return redirect()->route('main');
     }
 }

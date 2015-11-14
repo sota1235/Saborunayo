@@ -4,17 +4,18 @@
  */
 namespace App\Interfaces\Services;
 
+use Laravel\Socialite\Two\User;
+
 interface UserServiceInterface
 {
     /**
      * ユーザを登録する
      *
-     * @param string $gitHubName
-     * @param string $yoName
+     * @param User $gitHubUser
      *
-     * @return bool $result
+     * @return int $userId
      */
-    public function registerUser($gitHubName, $yoName);
+    public function registerUser(User $user);
 
     /**
      * 全ユーザの情報を取得
