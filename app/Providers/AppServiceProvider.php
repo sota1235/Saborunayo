@@ -39,8 +39,13 @@ class AppServiceProvider extends ServiceProvider
             return new \App\Services\YoService();
         });
         /* Models */
-        $this->app->bind(\App\Interfaces\Models\UserModelInterface::class,
+        $this->app->bind(
+            \App\Interfaces\Models\UserModelInterface::class,
             \App\Models\UserModel::class
+        );
+        $this->app->bind(
+            \App\Interfaces\Models\GitHubInfoModelInterface::class,
+            \App\Models\GitHubInfoModel::class
         );
         /* Libraries */
         $this->app->bind('\Goutte\Client', function ($app) {
