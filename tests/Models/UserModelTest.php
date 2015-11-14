@@ -11,9 +11,19 @@ class UserModelTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @var string */
+    protected $userModelName = 'App\Interfaces\Models\UserModelInterface';
+    protected $targetTable   = 'users';
+
     public function setUp()
     {
         parent::setUp();
+    }
+
+    public function testValidInstance()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $this->assertInstanceOf($this->userModelName, $userModel);
     }
 
     /**
@@ -22,7 +32,7 @@ class UserModelTest extends TestCase
      */
     public function testGetUsers()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
         $mockGName      = 'hoge';
         $mockPhonNumber = 'moge';
         // db setting
@@ -42,13 +52,39 @@ class UserModelTest extends TestCase
         $this->missingFromDatabase('users', ['github_name' => $mockGName]);
     }
 
+    public function testGetUserById()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $userMock = ['github_name' => 'github_name', 'phone_number' => 100];
+        \DB::table($this->targetTable)->insert($userMock);
+        $this->seeInDatabase($this->targetTable, $userMock);
+        $id = \DB::table($this->targetTable)->where('github_name', $userMock['github_name'])
+            ->first()->id;
+        $user = $userModel->getUserById($id);
+        $this->assertEquals($user->github_name, $userMock['github_name']);
+        $this->assertEquals($user->phone_number, $userMock['phone_number']);
+    }
+
+    public function testRetrieveByToken()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $userMock = ['github_name' => 'github_name', 'phone_number' => 100, 'remember_token' => 200];
+        \DB::table($this->targetTable)->insert($userMock);
+        $this->seeInDatabase($this->targetTable, $userMock);
+        $id = \DB::table($this->targetTable)->where('github_name', $userMock['github_name'])
+            ->first()->id;
+        $user = $userModel->retrieveByToken($id, 200);
+        $this->assertEquals($user->github_name, $userMock['github_name']);
+        $this->assertEquals($user->phone_number, $userMock['phone_number']);
+    }
+
     /**
      * test method for getUsers
      * user empty
      */
     public function testGetNoUsers()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
         // db setting
         \DB::table('users')->delete();
         // execute
@@ -63,7 +99,7 @@ class UserModelTest extends TestCase
      */
     public function testNotGetDeletedUsers()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
         // db setting
         $mockData = [
             'github_name'  => 'hoge',
@@ -85,7 +121,7 @@ class UserModelTest extends TestCase
      */
     public function testInsertUser()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
         $result    = $userModel->insertUser('soke', 'hoge');
         // assertion
         $this->assertEquals($result, 1);
@@ -98,7 +134,7 @@ class UserModelTest extends TestCase
      */
     public function testDeleteUser()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
 
         // insert data to delete
         $result = $userModel->insertUser('soke', 'hoge');
@@ -119,7 +155,7 @@ class UserModelTest extends TestCase
      */
     public function testDeleteUserFailed()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
 
         // delete data
         $this->missingFromDatabase('users', ['github_name' => 'soke']);
