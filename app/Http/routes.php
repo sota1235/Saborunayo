@@ -20,3 +20,4 @@
 // for ajax
 \Route::post('/check/git',     'AjaxController@checkGitHubName');
 \Route::post('/register/user', 'AjaxController@registerUser');
+\Route::get('/edit', ['as' => 'main.edit', 'uses' => 'MainController@getEdit']);

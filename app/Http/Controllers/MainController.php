@@ -20,4 +20,17 @@ class MainController extends Controller
     {
         return view('index');
     }
+
+    /**
+     * 電話番号編集ページを表示
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getEdit()
+    {
+        return view('edit', [
+            'githubName'  => 'github_name',
+            'phoneNumber' => 'hoge'
+        ]);
+    }
 }
