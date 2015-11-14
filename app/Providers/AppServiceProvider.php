@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->registerAuthDrivers();
     }
 
     /**
@@ -45,6 +45,19 @@ class AppServiceProvider extends ServiceProvider
         /* Libraries */
         $this->app->bind('\Goutte\Client', function ($app) {
             return new \Goutte\Client();
+        });
+    }
+
+    /**
+     * Register expanded auth driver
+     */
+    public function registerAuthDrivers()
+    {
+        $this->app['auth']->extend('github', function ($app) {
+            $userModel = $app->make(\App\Interfaces\Models\UserModelInterface::class);
+            return new \App\Authenticate\Driver\GitHubUserProvider(
+                $userModel
+            );
         });
     }
 }
