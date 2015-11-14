@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', 'MainController@index');
+\Route::get('/', 'MainController@index');
 
 // authentication
-\Route::get('/auth', ['as' => 'auth', 'use' => 'MainController@redirectToGitHub']);
+\Route::get('/auth', ['as' => 'auth', 'uses' => 'MainController@redirectToGitHub']);
 
 // for ajax
-Route::post('/check/git',     'AjaxController@checkGitHubName');
-Route::post('/register/user', 'AjaxController@registerUser');
+\Route::post('/check/git',     'AjaxController@checkGitHubName');
+\Route::post('/register/user', 'AjaxController@registerUser');
