@@ -14,7 +14,8 @@
 \Route::get('/', 'MainController@index');
 
 // authentication
-\Route::get('/auth',           ['as' => 'auth', 'uses' => 'AuthController@redirectToGitHub']);
+\Route::get('/login',          ['as' => 'auth.login',    'uses' => 'AuthController@getLogin']);
+\Route::get('/auth',           ['as' => 'auth',          'uses' => 'AuthController@redirectToGitHub']);
 \Route::get('/oauth/callback', ['as' => 'auth.callback', 'uses' => 'AuthController@handleGitHubRdirect']);
 
 // for ajax

@@ -12,6 +12,16 @@ use Laravel\Socialite\Contracts\Factory as SocialiteManager;
 class AuthController extends Controller
 {
     /**
+     * Return login page
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getLogin()
+    {
+        return view('login');
+    }
+
+    /**
      * Redirect to GitHub Authorization
      *
      * @param SocialiteManager $socialiteManager
