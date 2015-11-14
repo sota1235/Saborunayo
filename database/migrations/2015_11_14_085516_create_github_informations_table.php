@@ -12,7 +12,7 @@ class CreateGithubInformationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('github_infomations', function (BluePrint $table) {
+        Schema::create('github_informations', function (BluePrint $table) {
             $table->increments('github_id')->increments();
             $table->integer('user_id')->unique();
             $table->string('token')->unique();
@@ -31,6 +31,6 @@ class CreateGithubInformationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('github_infomations');
+        Schema::drop('github_informations');
     }
 }
