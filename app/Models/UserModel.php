@@ -62,6 +62,18 @@ class UserModel extends Model implements UserModelInterface
     }
 
     /**
+     * remember_tokenを更新
+     *
+     * @param mixed  $userId
+     * @param string $token
+     */
+    public function updateRememberToken($userId, $token)
+    {
+        \DB::table($this->table)->where('id', $userId)
+            ->update(['remember_token' => $token]);
+    }
+
+    /**
      * ユーザを登録する
      *
      * @param string $gitHubName
