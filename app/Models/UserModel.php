@@ -65,24 +65,16 @@ class UserModel extends Model implements UserModelInterface
      * ユーザを登録する
      *
      * @param string $gitHubName
-     * @param string $yoName
+     * @param int    $phoneNumber
      *
      * @return int $result
      */
-    public function insertUser($gitHubName, $yoName)
+    public function insertUser($gitHubName, $phoneNumber)
     {
-        try {
-            $result = DB::table($this->table)->insert([
-                'github_name' => $gitHubName,
-                'yo_name'     => $yoName,
-            ]);
-        } catch (\PDOException $e) {
-            \Log::error(
-                'Insert user failed: error - '.$e->getMessage().' user - '.$gitHubName
-            );
-            return 0;
-        }
-        return $result;
+        return $result = DB::table($this->table)->insert([
+            'github_name'  => $gitHubName,
+            'phone_number' => $phoneNumber,
+        ]);
     }
 
     /**

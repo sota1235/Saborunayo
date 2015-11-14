@@ -38,11 +38,11 @@ interface UserModelInterface
      * ユーザを登録する
      *
      * @param string $gitHubName
-     * @param string $yoName
+     * @param int    $phoneNumber
      *
      * @return int $result
      */
-    public function insertUser($gitHubName, $yoName);
+    public function insertUser($gitHubName, $phoneNumber);
 
     /**
      * ユーザを削除する

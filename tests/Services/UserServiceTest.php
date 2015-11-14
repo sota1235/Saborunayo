@@ -87,18 +87,20 @@ class UserServiceTest extends TestCase
 abstract class AbstractUserMockClass implements \App\Interfaces\Models\UserModelInterface
 {
     public function getUsers() {}
-    public function insertUser($gitHubName, $yoName) {}
+    public function getUserById($userId, array $columns = ['*']) {}
+    public function retrieveByToken($userId, $token, array $columns = ['*']) {}
+    public function insertUser($gitHubName, $phoneNumber) {}
     public function deleteUser($userId) {}
 }
 
 class TestRegisterUserSuccess extends AbstractUserMockClass
 {
-    public function insertUser($gitHubName, $yoName) { return 1; }
+    public function insertUser($gitHubName, $phoneNumber) { return 1; }
 }
 
 class TestRegisterUserFailed extends AbstractUserMockClass
 {
-    public function insertUser($gitHubName, $yoName) { return 0; }
+    public function insertUser($gitHubName, $phoneNumber) { return 0; }
 }
 
 class TestGetUsers extends AbstractUserMockClass

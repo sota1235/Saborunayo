@@ -23,22 +23,23 @@ class UserModelTest extends TestCase
     public function testGetUsers()
     {
         $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-        $mockGName = 'hoge';
-        $mockYName = 'moge';
+        $mockGName      = 'hoge';
+        $mockPhonNumber = 'moge';
         // db setting
         \DB::table('users')->delete();
         \DB::table('users')->insert([
-            'github_name' => $mockGName,
-            'yo_name'     => $mockYName
+            'github_name'  => $mockGName,
+            'phone_number' => $mockPhonNumber
         ]);
         // execute
         $result = $userModel->getUsers();
         // assertion
         $this->assertNotEmpty($result);
         $this->assertEquals($result[0]->github_name, $mockGName);
-        $this->assertEquals($result[0]->yo_name, $mockYName);
+        $this->assertEquals($result[0]->phone_number, $mockPhonNumber);
         // settle DB
         \DB::table('users')->delete();
+        $this->missingFromDatabase('users', ['github_name' => $mockGName]);
     }
 
     /**
@@ -66,7 +67,7 @@ class UserModelTest extends TestCase
         // db setting
         $mockData = [
             'github_name'  => 'hoge',
-            'yo_name'      => 'moge',
+            'phone_number' => 'moge',
             'deleted_flag' => 1
         ];
         \DB::table('users')->delete();
@@ -88,31 +89,7 @@ class UserModelTest extends TestCase
         $result    = $userModel->insertUser('soke', 'hoge');
         // assertion
         $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
-    }
-
-    /**
-     * test method for insertUser
-     * insert user failed (throw PDOException)
-     */
-    public function testInsertUserFailed()
-    {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-        // log settings
-        $path = base_path('tests/storage/logs/usermodel.log');
-        \Log::useFiles($path);
-
-        /* insert first data */
-        $result = $userModel->insertUser('soke', 'hoge');
-        // assertion
-        $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
-        /* insert same data */
-        $result = $userModel->insertUser('soke', 'hoge');
-        // assertion
-        $this->assertFileExists($path);
-        $this->assertNotFalse(strpos(file_get_contents($path), 'Insert user failed'));
-        $this->assertEquals($result, 0);
+        $this->seeInDatabase('users', ['github_name' => 'soke', 'phone_number' => 'hoge']);
     }
 
     /**
@@ -127,13 +104,13 @@ class UserModelTest extends TestCase
         $result = $userModel->insertUser('soke', 'hoge');
         // assertion
         $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
+        $this->seeInDatabase('users', ['github_name' => 'soke', 'phone_number' => 'hoge']);
 
         // delete data
         $result = $userModel->deleteUser('soke');
         // assertion
         $this->assertEquals($result, 1);
-        $this->missingFromDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
+        $this->missingFromDatabase('users', ['github_name' => 'soke', 'phone_number' => 'hoge']);
     }
 
     /**
@@ -145,6 +122,7 @@ class UserModelTest extends TestCase
         $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
 
         // delete data
+        $this->missingFromDatabase('users', ['github_name' => 'soke']);
         $result = $userModel->deleteUser('soke');
         // assertion
         $this->assertEquals($result, 0);
