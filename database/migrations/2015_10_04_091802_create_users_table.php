@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->unique();
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('deleted_flag')->default(0);
+            $table->rememberToken();
         });
     }
 
