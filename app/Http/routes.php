@@ -18,7 +18,7 @@
 
 // Need login
 \Route::group(['middleware' => 'auth'], function () {
-    \Route::get('/', 'MainController@index');
+    \Route::get('/',     ['as' => 'main',      'uses' => 'MainController@index']);
     \Route::get('/edit', ['as' => 'main.edit', 'uses' => 'MainController@getEdit']);
 
     // for ajax
