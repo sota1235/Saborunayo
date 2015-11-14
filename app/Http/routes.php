@@ -13,6 +13,9 @@
 
 Route::get('/', 'MainController@index');
 
+// authentication
+\Route::get('/auth', ['as' => 'auth', 'use' => 'MainController@redirectToGitHub']);
+
 // for ajax
 Route::post('/check/git',     'AjaxController@checkGitHubName');
 Route::post('/register/user', 'AjaxController@registerUser');
