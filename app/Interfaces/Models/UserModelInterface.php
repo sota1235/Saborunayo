@@ -19,9 +19,20 @@ interface UserModelInterface
      * @param int   $userId
      * @param array $culumns
      *
-     * @param array
+     * @return array|null
      */
-    public function getUserById($userId, array $culumns = ['*']);
+    public function getUserById($userId, array $columns = ['*']);
+
+    /**
+     * remember_tokenからユーザを取得
+     *
+     * @param mixed  $userId
+     * @param string $token
+     * @param array  $culumns
+     *
+     * @return array|null
+     */
+    public function retrieveByToken($userId, $token, array $columns = ['*']);
 
     /**
      * ユーザを登録する

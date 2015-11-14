@@ -39,11 +39,26 @@ class UserModel extends Model implements UserModelInterface
      * @param int   $userId
      * @param array $culumns
      *
-     * @param array
+     * @return array|null
      */
-    public function getUserById($userId, array $culumns = ['*'])
+    public function getUserById($userId, array $columns = ['*'])
     {
-        return \DB::table($this->table)->where('id', $userId)->get($culumns);
+        return \DB::table($this->table)->where('id', $userId)->first($columns);
+    }
+
+    /**
+     * remember_tokenからユーザを取得
+     *
+     * @param mixed  $userId
+     * @param string $token
+     * @param array  $culumns
+     *
+     * @return array|null
+     */
+    public function retrieveByToken($userId, $token, array $columns = ['*'])
+    {
+        return \DB::table($this->table)->where('id', $userId)
+            ->where('remember_token', $token)->first($columns);
     }
 
     /**
