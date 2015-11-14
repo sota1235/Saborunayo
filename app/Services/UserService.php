@@ -49,11 +49,11 @@ class UserService extends Service implements UserServiceInterface
         }
 
         // usersに新たに登録
-        $userId = $this->userModel->insertUser(null);
+        $userId = $this->userModel->insertUser('tmp'); // XXX: テーブル設計見直し
         // テーブル格納用データ
         $gitHubInformation = [
             'user_id'   => $userId,
-            'token'     => $gitHubUser->offsetGet('token'),
+            'token'     => $gitHubUser->token,
             'github_id' => $gitHubUser->getId(),
             'nickname'  => $gitHubUser->getNickname(),
             'name'      => $gitHubUser->getName(),

@@ -36,7 +36,7 @@ class GitHubUserProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
-        $uesr = $this->user->getUserById($identifier);
+        $user = $this->user->getUserById($identifier);
         return $this->getGitHubUser($user);
     }
 
