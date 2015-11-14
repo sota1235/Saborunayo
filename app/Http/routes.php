@@ -11,14 +11,17 @@
 |
 */
 
-\Route::get('/', 'MainController@index');
-
 // authentication
 \Route::get('/login',          ['as' => 'auth.login',    'uses' => 'AuthController@getLogin']);
 \Route::get('/auth',           ['as' => 'auth',          'uses' => 'AuthController@redirectToGitHub']);
 \Route::get('/oauth/callback', ['as' => 'auth.callback', 'uses' => 'AuthController@handleGitHubRdirect']);
 
-// for ajax
-\Route::post('/check/git',     'AjaxController@checkGitHubName');
-\Route::post('/register/user', 'AjaxController@registerUser');
-\Route::get('/edit', ['as' => 'main.edit', 'uses' => 'MainController@getEdit']);
+// Need login
+\Route::group(['middleware' => 'auth'], function () {
+    \Route::get('/', 'MainController@index');
+    \Route::get('/edit', ['as' => 'main.edit', 'uses' => 'MainController@getEdit']);
+
+    // for ajax
+    \Route::post('/check/git',     'AjaxController@checkGitHubName');
+    \Route::post('/register/user', 'AjaxController@registerUser');
+});
