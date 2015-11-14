@@ -20,16 +20,4 @@ class MainController extends Controller
     {
         return view('index');
     }
-
-    /**
-     * Redirect to GitHub Authorization
-     *
-     * @param SocialiteManager $socialiteManager
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function redirectToGitHub(SocialiteManager $socialiteManager)
-    {
-        return $socialiteManager->driver('github')->redirect();
-    }
 }
