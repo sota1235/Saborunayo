@@ -14,6 +14,16 @@ interface UserModelInterface
     public function getUsers();
 
     /**
+     * ユーザIDからユーザ情報を取得
+     *
+     * @param int   $userId
+     * @param array $culumns
+     *
+     * @param array
+     */
+    public function getUserById($userId, array $culumns = ['*']);
+
+    /**
      * ユーザを登録する
      *
      * @param string $gitHubName

@@ -34,6 +34,19 @@ class UserModel extends Model implements UserModelInterface
     }
 
     /**
+     * ユーザIDからユーザ情報を取得
+     *
+     * @param int   $userId
+     * @param array $culumns
+     *
+     * @param array
+     */
+    public function getUserById($userId, array $culumns = ['*'])
+    {
+        return \DB::table($this->table)->where('id', $userId)->get($culumns);
+    }
+
+    /**
      * ユーザを登録する
      *
      * @param string $gitHubName
