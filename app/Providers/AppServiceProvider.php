@@ -32,8 +32,9 @@ class AppServiceProvider extends ServiceProvider
             return new \App\Services\GitHubService($goutte);
         });
         $this->app->bind('\App\Interfaces\Services\UserServiceInterface', function ($app) {
-            $userModel = $app->make('App\Interfaces\Models\UserModelInterface');
-            return new \App\Services\UserService($userModel);
+            $userModel       = $app->make('App\Interfaces\Models\UserModelInterface');
+            $gitHubInfoModel = $app->make('App\Interfaces\Models\GitHubInfoModelInterface');
+            return new \App\Services\UserService($userModel, $gitHubInfoModel);
         });
         $this->app->bind('\App\Interfaces\Services\YoServiceInterface', function ($app) {
             return new \App\Services\YoService();

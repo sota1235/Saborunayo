@@ -73,17 +73,4 @@ class UserService extends Service implements UserServiceInterface
     {
         return $this->userModel->getUsers();
     }
-
-    /**
-     * ユーザを削除する
-     *
-     * @param string $gitHubName
-     *
-     * @return bool $result
-     */
-    public function dropUser($gitHubName)
-    {
-        $result = $this->userModel->deleteUser($gitHubName);
-        return $result ? true : false;
-    }
 }

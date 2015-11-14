@@ -23,13 +23,4 @@ interface UserServiceInterface
      * @return array
      */
     public function getUsers();
-
-    /**
-     * ユーザを削除する
-     *
-     * @param string $gitHubName
-     *
-     * @return bool $result
-     */
-    public function dropUser($gitHubName);
 }
