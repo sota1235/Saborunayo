@@ -52,11 +52,11 @@ interface UserModelInterface
     public function updateRememberToken($userId, $token);
 
     /**
-     * ユーザを登録する
+     * ユーザを登録し、IDを返す
      *
      * @param int $phoneNumber
      *
-     * @return int $result
+     * @return int
      */
     public function insertUser($phoneNumber);
 }

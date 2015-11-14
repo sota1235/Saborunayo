@@ -89,15 +89,15 @@ class UserModel extends Model implements UserModelInterface
     }
 
     /**
-     * ユーザを登録する
+     * ユーザを登録し、IDを返す
      *
      * @param int $phoneNumber
      *
-     * @return int $result
+     * @return int
      */
     public function insertUser($phoneNumber)
     {
-        return $result = DB::table($this->table)->insert([
+        return $result = DB::table($this->table)->insertGetId([
             'phone_number' => $phoneNumber,
         ]);
     }

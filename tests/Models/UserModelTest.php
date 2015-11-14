@@ -132,7 +132,7 @@ class UserModelTest extends TestCase
         $userModel = $this->app->make($this->userModelName);
         $result    = $userModel->insertUser('hoge');
         // assertion
-        $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['phone_number' => 'hoge']);
+        $this->seeInDatabase($this->targetTable, ['id' => $result]);
+        $this->seeInDatabase($this->targetTable, ['phone_number' => 'hoge']);
     }
 }
