@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 /**
  * Test class for App\Models\GitHubInfoModel
  */
-class GitHubInfoModel extends TestCase
+class GitHubInfoModelTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -22,7 +22,7 @@ class GitHubInfoModel extends TestCase
 
     public function testValidInstance()
     {
-        $gitHubInfoModelModel = $this->app->make($this->gitHubInfoModelName);
+        $gitHubInfoModel = $this->app->make($this->gitHubInfoModelName);
         $this->assertInstanceOf($this->gitHubInfoModelName, $gitHubInfoModel);
     }
 
@@ -38,7 +38,7 @@ class GitHubInfoModel extends TestCase
             'email'     => 'email',
             'avatar'    => 'avatar',
         ];
-        $gitHubInfoModel->insert($userId, $gitHubInfo);
+        $gitHubInfoModel->insert($gitHubInfo);
         $this->seeInDatabase($this->targetTable, $gitHubInfo);
         // 後片付け
         \DB::table($this->targetTable)->where('user_id', 100)->delete();
