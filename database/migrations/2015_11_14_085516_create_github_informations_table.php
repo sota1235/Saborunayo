@@ -13,10 +13,10 @@ class CreateGithubInformationsTable extends Migration
     public function up()
     {
         Schema::create('github_informations', function (BluePrint $table) {
-            $table->increments('github_id')->increments();
+            $table->increments('github_informations_id')->increments();
             $table->integer('user_id')->unique();
             $table->string('token')->unique();
-            $table->integer('id')->unique();
+            $table->integer('github_id')->unique();
             $table->string('nickname');
             $table->string('name');
             $table->string('email');
