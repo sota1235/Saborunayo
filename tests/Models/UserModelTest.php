@@ -78,6 +78,20 @@ class UserModelTest extends TestCase
         $this->assertEquals($user->phone_number, $userMock['phone_number']);
     }
 
+    public function testUpdateRememberToken()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $userMock = ['github_name' => 'github_name', 'phone_number' => 100, 'remember_token' => 200];
+        \DB::table($this->targetTable)->insert($userMock);
+        $this->seeInDatabase($this->targetTable, $userMock);
+        $id = \DB::table($this->targetTable)->where('github_name', $userMock['github_name'])
+            ->first()->id;
+        $userModel->updateRememberToken($id, 300); // update remember_token
+        $this->missingFromDatabase($this->targetTable, $userMock);
+        $userMock['remember_token'] = 300;
+        $this->seeInDatabase($this->targetTable, $userMock);
+    }
+
     /**
      * test method for getUsers
      * user empty

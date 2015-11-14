@@ -35,6 +35,14 @@ interface UserModelInterface
     public function retrieveByToken($userId, $token, array $columns = ['*']);
 
     /**
+     * remember_tokenを更新
+     *
+     * @param mixed  $userId
+     * @param string $token
+     */
+    public function updateRememberToken($userId, $token);
+
+    /**
      * ユーザを登録する
      *
      * @param string $gitHubName
