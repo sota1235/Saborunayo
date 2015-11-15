@@ -5,6 +5,7 @@
 import $           from 'jquery';
 import { Promise } from 'es6-promise';
 import Ajax        from './ajax.babel.js';
+import PNotify     from 'pnotify';
 
 $(() => {
   /* Variables */
@@ -36,6 +37,26 @@ $(() => {
     return json.status === 'success';
   };
 
+  // success notify
+  let successNotify = (title, text) => {
+    new PNotify({
+      title: title,
+      text: text,
+      type: 'success',
+      styling: 'fontawesome',
+    });
+  };
+
+  // failed notify
+  let failedNotify = (title, text) => {
+    new PNotify({
+      title: title,
+      text: text,
+      type: 'error',
+      styling: 'fontawesome',
+    });
+  };
+
   /* Event Listeners */
   // update phone number
   $updateButton.click(() => {
@@ -44,13 +65,13 @@ $(() => {
     updatePhoneNum.request({ phone_number: number})
       .then((result) => {
         if(result.status === 'success') {
-          alert('Update phone number success!');
-          return
+          successNotify('Update Success!', 'Updating your phone number success');
+          return;
         }
-        alert('Update phone number failed...');
+        failedNotify('Update Error!', 'Update phone number failed...');
       })
       .catch((error) => {
-        alert('Server error. Plese contact @sota1235');
+        failedNotify('Server Error!', 'Something wrong. Plese contact @sota1235');
       });
   });
 
