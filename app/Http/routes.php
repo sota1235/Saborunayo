@@ -18,8 +18,9 @@
 
 // Need login
 \Route::group(['middleware' => 'auth'], function () {
-    \Route::get('/',     ['as' => 'main',      'uses' => 'MainController@index']);
-    \Route::get('/edit', ['as' => 'main.edit', 'uses' => 'MainController@getEdit']);
+    \Route::get('/',       ['as' => 'main',        'uses' => 'MainController@index']);
+    \Route::get('/edit',   ['as' => 'main.edit',   'uses' => 'MainController@getEdit']);
+    \Route::get('/logout', ['as' => 'main.logout', 'uses' => 'MainController@logout']);
 
     // for ajax
     \Route::post('/update/phonenumber', ['as' => 'ajax.phone', 'uses' => 'AjaxController@updatePhoneNumber']);

@@ -34,4 +34,15 @@ class MainController extends Controller
             'phoneNumber' => $phoneNumber === 'tmp' ? null : $phoneNumber,
         ]);
     }
+
+    /**
+     * ログアウトする
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        \Auth::driver('github')->logout();
+        return redirect()->route('auth.login');
+    }
 }
