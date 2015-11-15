@@ -16,6 +16,9 @@
         <input type="text" id="phone-number" value="{{ $phoneNumber or null}}" placeholder="Enter your phone number" required>
       </div>
       <button id="update">Update</button>
+      <a href="/">
+        <button id="back">Back to Main page</button>
+      </a>
     </div>
   </div>
 </div>
