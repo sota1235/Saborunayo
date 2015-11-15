@@ -73,4 +73,20 @@ class UserService extends Service implements UserServiceInterface
     {
         return $this->userModel->getUsers();
     }
+
+    /**
+     * ユーザの電話番号をアップデート
+     *
+     * @param mixed   $userId
+     * @param string  $phoneNumber
+     *
+     * @return bool
+     */
+    public function updatePhoneNumber($userId, $phoneNumber)
+    {
+        $phoneNumber = '+81'.substr($phoneNumber, 1);
+        $result =
+            $this->userModel->updateUser($userId, ['phone_number' => $phoneNumber]);
+        return $result === 1;
+    }
 }

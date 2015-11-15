@@ -23,4 +23,14 @@ interface UserServiceInterface
      * @return array
      */
     public function getUsers();
+
+    /**
+     * ユーザの電話番号をアップデート
+     *
+     * @param mixed   $userId
+     * @param string  $phoneNumber
+     *
+     * @return bool
+     */
+    public function updatePhoneNumber($userId, $phoneNumber);
 }
