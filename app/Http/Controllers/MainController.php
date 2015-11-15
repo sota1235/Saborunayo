@@ -28,9 +28,9 @@ class MainController extends Controller
      */
     public function getEdit()
     {
+        $phoneNumber = \Auth::driver('github')->user()->__get('phone_number');
         return view('edit', [
-            'githubName'  => 'github_name',
-            'phoneNumber' => 'hoge'
+            'phoneNumber' => $phoneNumber === 'tmp' ? null : $phoneNumber,
         ]);
     }
 }

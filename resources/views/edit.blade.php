@@ -13,9 +13,6 @@
     </h3>
     <div class="sa_form">
       <div class="field">
-        <input type="text" id="github_name" value={{ $githubName }} required>
-      </div>
-      <div class="field">
         <input type="text" id="yo_name" value="{{ $phoneNumber or null}}" placeholder="Enter your phone number" required>
       </div>
       <button id="update">Update</button>
