@@ -18,7 +18,7 @@
       <div class="field">
         <input type="text" id="yo_name" value="{{ $phoneNumber or null}}" placeholder="Enter your phone number" required>
       </div>
-      <button id="register">Edit</button>
+      <button id="update">Update</button>
     </div>
   </div>
 </div>
