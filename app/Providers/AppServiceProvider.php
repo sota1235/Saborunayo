@@ -52,6 +52,17 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('\Goutte\Client', function ($app) {
             return new \Goutte\Client();
         });
+        $this->app->bind(
+            \Aloha\Twilio\TwilioInterface::class,
+            function ($app) {
+                $config = config('services.twilio');
+                return new \Aloha\Twilio\Twilio(
+                    $config['sid'],
+                    $config['token'],
+                    $config['from_number']
+                );
+            }
+        );
     }
 
     /**
