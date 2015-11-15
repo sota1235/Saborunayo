@@ -21,6 +21,7 @@
                 <directory>./app/Interfaces/</directory>
                 <directory>./app/Providers/</directory>
                 <directory>./app/Http/Requests</directory>
+                <directory>./app/Models</directory>
                 <file>./app/Console/Commands/Inspire.php</file>
                 <file>./app/Console/Kernel.php</file>
                 <file>./app/Exceptions/Handler.php</file>
