@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->registerAuthDrivers();
     }
 
     /**
@@ -32,19 +32,49 @@ class AppServiceProvider extends ServiceProvider
             return new \App\Services\GitHubService($goutte);
         });
         $this->app->bind('\App\Interfaces\Services\UserServiceInterface', function ($app) {
-            $userModel = $app->make('App\Interfaces\Models\UserModelInterface');
-            return new \App\Services\UserService($userModel);
+            $userModel       = $app->make('App\Interfaces\Models\UserModelInterface');
+            $gitHubInfoModel = $app->make('App\Interfaces\Models\GitHubInfoModelInterface');
+            return new \App\Services\UserService($userModel, $gitHubInfoModel);
         });
         $this->app->bind('\App\Interfaces\Services\YoServiceInterface', function ($app) {
             return new \App\Services\YoService();
         });
         /* Models */
-        $this->app->bind(\App\Interfaces\Models\UserModelInterface::class,
+        $this->app->bind(
+            \App\Interfaces\Models\UserModelInterface::class,
             \App\Models\UserModel::class
+        );
+        $this->app->bind(
+            \App\Interfaces\Models\GitHubInfoModelInterface::class,
+            \App\Models\GitHubInfoModel::class
         );
         /* Libraries */
         $this->app->bind('\Goutte\Client', function ($app) {
             return new \Goutte\Client();
+        });
+        $this->app->bind(
+            \Aloha\Twilio\TwilioInterface::class,
+            function ($app) {
+                $config = config('services.twilio');
+                return new \Aloha\Twilio\Twilio(
+                    $config['sid'],
+                    $config['token'],
+                    $config['from_number']
+                );
+            }
+        );
+    }
+
+    /**
+     * Register expanded auth driver
+     */
+    public function registerAuthDrivers()
+    {
+        $this->app['auth']->extend('github', function ($app) {
+            $userModel = $app->make(\App\Interfaces\Models\UserModelInterface::class);
+            return new \App\Authenticate\Driver\GitHubUserProvider(
+                $userModel
+            );
         });
     }
 }

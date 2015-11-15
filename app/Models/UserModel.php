@@ -30,45 +30,93 @@ class UserModel extends Model implements UserModelInterface
      */
     public function getUsers()
     {
-        return DB::table($this->table)->where('deleted_flag', 0)->get();
+        return \DB::table($this->table)
+            ->leftJoin('github_informations AS gi', 'users.id', '=', 'gi.user_id')
+            ->where('users.deleted_flag', 0)->get();
     }
 
     /**
-     * ユーザを登録する
+     * ユーザIDからユーザ情報を取得
      *
-     * @param string $gitHubName
-     * @param string $yoName
+     * @param int   $userId
+     * @param array $culumns
      *
-     * @return int $result
+     * @return array|null
      */
-    public function insertUser($gitHubName, $yoName)
+    public function getUserById($userId, array $columns = ['*'])
     {
-        try {
-            $result = DB::table($this->table)->insert([
-                'github_name' => $gitHubName,
-                'yo_name'     => $yoName,
-            ]);
-        } catch (\PDOException $e) {
-            \Log::error(
-                'Insert user failed: error - '.$e->getMessage().' user - '.$gitHubName
-            );
-            return 0;
-        }
-        return $result;
+        return \DB::table($this->table)
+            ->leftJoin('github_informations AS gi', 'users.id', '=', 'gi.user_id')
+            ->where('users.id', $userId)->first($columns);
     }
 
     /**
-     * ユーザを削除する
+     * GitHub IDからユーザ情報を取得
      *
-     * @param string $gitHubName
+     * @param mixed $gitHubId
      *
-     * @return int $result
+     * @return array|null
      */
-    public function deleteUser($gitHubName)
+    public function getUserByGitHubId($gitHubId)
     {
-        $result = DB::table($this->table)
-            ->where('github_name', $gitHubName)
-            ->delete();
-        return $result;
+        return \DB::table($this->table)
+            ->leftJoin('github_informations as gi', 'users.id', '=', 'gi.user_id')
+            ->where('gi.github_id', $gitHubId)
+            ->first();
+    }
+
+    /**
+     * remember_tokenからユーザを取得
+     *
+     * @param mixed  $userId
+     * @param string $token
+     * @param array  $culumns
+     *
+     * @return array|null
+     */
+    public function retrieveByToken($userId, $token, array $columns = ['*'])
+    {
+        return \DB::table($this->table)->where('id', $userId)
+            ->where('remember_token', $token)->first($columns);
+    }
+
+    /**
+     * remember_tokenを更新
+     *
+     * @param mixed  $userId
+     * @param string $token
+     */
+    public function updateRememberToken($userId, $token)
+    {
+        \DB::table($this->table)->where('id', $userId)
+            ->update(['remember_token' => $token]);
+    }
+
+    /**
+     * 指定されたパラメータを更新
+     *
+     * @param mixed  $userId
+     * @param array  $updateColumns
+     *
+     * @return bool
+     */
+    public function updateUser($userId, array $updateColumns)
+    {
+        return \DB::table($this->table)->where('id', $userId)
+            ->update($updateColumns);
+    }
+
+    /**
+     * ユーザを登録し、IDを返す
+     *
+     * @param int $phoneNumber
+     *
+     * @return int
+     */
+    public function insertUser($phoneNumber)
+    {
+        return $result = DB::table($this->table)->insertGetId([
+            'phone_number' => $phoneNumber,
+        ]);
     }
 }

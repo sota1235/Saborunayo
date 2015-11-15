@@ -11,8 +11,19 @@
 |
 */
 
-Route::get('/', 'MainController@index');
+// authentication
+\Route::group(['middleware' => 'guest'], function () {
+  \Route::get('/login',          ['as' => 'auth.login',    'uses' => 'AuthController@getLogin']);
+  \Route::get('/auth',           ['as' => 'auth',          'uses' => 'AuthController@redirectToGitHub']);
+  \Route::get('/oauth/callback', ['as' => 'auth.callback', 'uses' => 'AuthController@handleGitHubRdirect']);
+});
 
-// for ajax
-Route::post('/check/git',     'AjaxController@checkGitHubName');
-Route::post('/register/user', 'AjaxController@registerUser');
+// Need login
+\Route::group(['middleware' => 'auth'], function () {
+    \Route::get('/',       ['as' => 'main',        'uses' => 'MainController@index']);
+    \Route::get('/edit',   ['as' => 'main.edit',   'uses' => 'MainController@getEdit']);
+    \Route::get('/logout', ['as' => 'main.logout', 'uses' => 'MainController@logout']);
+
+    // for ajax
+    \Route::post('/update/phonenumber', ['as' => 'ajax.phone', 'uses' => 'AjaxController@updatePhoneNumber']);
+});

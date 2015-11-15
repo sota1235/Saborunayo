@@ -11,9 +11,19 @@ class UserModelTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @var string */
+    protected $userModelName = 'App\Interfaces\Models\UserModelInterface';
+    protected $targetTable   = 'users';
+
     public function setUp()
     {
         parent::setUp();
+    }
+
+    public function testValidInstance()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $this->assertInstanceOf($this->userModelName, $userModel);
     }
 
     /**
@@ -22,23 +32,59 @@ class UserModelTest extends TestCase
      */
     public function testGetUsers()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-        $mockGName = 'hoge';
-        $mockYName = 'moge';
+        $userModel = $this->app->make($this->userModelName);
+        $mockPhonNumber = 'moge';
         // db setting
         \DB::table('users')->delete();
         \DB::table('users')->insert([
-            'github_name' => $mockGName,
-            'yo_name'     => $mockYName
+            'phone_number' => $mockPhonNumber
         ]);
         // execute
         $result = $userModel->getUsers();
         // assertion
         $this->assertNotEmpty($result);
-        $this->assertEquals($result[0]->github_name, $mockGName);
-        $this->assertEquals($result[0]->yo_name, $mockYName);
+        $this->assertEquals($result[0]->phone_number, $mockPhonNumber);
         // settle DB
         \DB::table('users')->delete();
+        $this->missingFromDatabase('users', ['phone_number' => $mockPhonNumber]);
+    }
+
+    public function testGetUserById()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $userMock = ['phone_number' => 100];
+        \DB::table($this->targetTable)->insert($userMock);
+        $this->seeInDatabase($this->targetTable, $userMock);
+        $id = \DB::table($this->targetTable)->where('phone_number', $userMock['phone_number'])
+            ->first()->id;
+        $user = $userModel->getUserById($id);
+        $this->assertEquals($user->phone_number, $userMock['phone_number']);
+    }
+
+    public function testRetrieveByToken()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $userMock = ['phone_number' => 100, 'remember_token' => 200];
+        \DB::table($this->targetTable)->insert($userMock);
+        $this->seeInDatabase($this->targetTable, $userMock);
+        $id = \DB::table($this->targetTable)->where('phone_number', $userMock['phone_number'])
+            ->first()->id;
+        $user = $userModel->retrieveByToken($id, 200);
+        $this->assertEquals($user->phone_number, $userMock['phone_number']);
+    }
+
+    public function testUpdateRememberToken()
+    {
+        $userModel = $this->app->make($this->userModelName);
+        $userMock = ['phone_number' => 100, 'remember_token' => 200];
+        \DB::table($this->targetTable)->insert($userMock);
+        $this->seeInDatabase($this->targetTable, $userMock);
+        $id = \DB::table($this->targetTable)->where('phone_number', $userMock['phone_number'])
+            ->first()->id;
+        $userModel->updateRememberToken($id, 300); // update remember_token
+        $this->missingFromDatabase($this->targetTable, $userMock);
+        $userMock['remember_token'] = 300;
+        $this->seeInDatabase($this->targetTable, $userMock);
     }
 
     /**
@@ -47,7 +93,7 @@ class UserModelTest extends TestCase
      */
     public function testGetNoUsers()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
         // db setting
         \DB::table('users')->delete();
         // execute
@@ -62,11 +108,10 @@ class UserModelTest extends TestCase
      */
     public function testNotGetDeletedUsers()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
+        $userModel = $this->app->make($this->userModelName);
         // db setting
         $mockData = [
-            'github_name'  => 'hoge',
-            'yo_name'      => 'moge',
+            'phone_number' => 'moge',
             'deleted_flag' => 1
         ];
         \DB::table('users')->delete();
@@ -84,69 +129,10 @@ class UserModelTest extends TestCase
      */
     public function testInsertUser()
     {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-        $result    = $userModel->insertUser('soke', 'hoge');
+        $userModel = $this->app->make($this->userModelName);
+        $result    = $userModel->insertUser('hoge');
         // assertion
-        $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
-    }
-
-    /**
-     * test method for insertUser
-     * insert user failed (throw PDOException)
-     */
-    public function testInsertUserFailed()
-    {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-        // log settings
-        $path = base_path('tests/storage/logs/usermodel.log');
-        \Log::useFiles($path);
-
-        /* insert first data */
-        $result = $userModel->insertUser('soke', 'hoge');
-        // assertion
-        $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
-        /* insert same data */
-        $result = $userModel->insertUser('soke', 'hoge');
-        // assertion
-        $this->assertFileExists($path);
-        $this->assertNotFalse(strpos(file_get_contents($path), 'Insert user failed'));
-        $this->assertEquals($result, 0);
-    }
-
-    /**
-     * test method for deleteUser
-     * delete user success
-     */
-    public function testDeleteUser()
-    {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-
-        // insert data to delete
-        $result = $userModel->insertUser('soke', 'hoge');
-        // assertion
-        $this->assertEquals($result, 1);
-        $this->seeInDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
-
-        // delete data
-        $result = $userModel->deleteUser('soke');
-        // assertion
-        $this->assertEquals($result, 1);
-        $this->missingFromDatabase('users', ['github_name' => 'soke', 'yo_name' => 'hoge']);
-    }
-
-    /**
-     * test method for deleteUser
-     * delete user failed (delete non exist user)
-     */
-    public function testDeleteUserFailed()
-    {
-        $userModel = $this->app->make('App\Interfaces\Models\UserModelInterface');
-
-        // delete data
-        $result = $userModel->deleteUser('soke');
-        // assertion
-        $this->assertEquals($result, 0);
+        $this->seeInDatabase($this->targetTable, ['id' => $result]);
+        $this->seeInDatabase($this->targetTable, ['phone_number' => 'hoge']);
     }
 }

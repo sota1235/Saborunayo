@@ -4,8 +4,10 @@
  */
 namespace App\Services;
 
+use Laravel\Socialite\Two\User;
 use App\Interfaces\Services\UserServiceInterface;
 use App\Interfaces\Models\UserModelInterface as UserModel;
+use App\Interfaces\Models\GitHubInfoModelInterface as GitHubInfoModel;
 
 /**
  * ユーザ情報を制御するサービスクラス
@@ -15,26 +17,51 @@ class UserService extends Service implements UserServiceInterface
     /** @var App\Interfaces\Models\UserModelInterface */
     protected $userModel;
 
+    /** @var App\Interfaces\Models\GitHubInfoModelInterface */
+    protected $gitHubInfoModel;
+
     /**
      * constructor
+     *
+     * @param UserModel       $userModel
+     * @param GitHubInfoModel $gitHubInfoModel
      */
-    public function __construct(UserModel $userModel)
+    public function __construct(UserModel $userModel, GitHubInfoModel $gitHubInfoModel)
     {
-        $this->userModel = $userModel;
+        $this->userModel       = $userModel;
+        $this->gitHubInfoModel = $gitHubInfoModel;
     }
 
     /**
      * ユーザを登録する
      *
-     * @param string $gitHubName
-     * @param string $yoName
+     * @param User $gitHubUser
      *
-     * @return bool $result
+     * @return int $userId
      */
-    public function registerUser($gitHubName, $yoName)
+    public function registerUser(User $gitHubUser)
     {
-        $result = $this->userModel->insertUser($gitHubName, $yoName);
-        return $result ? true : false;
+        $gitHubId = $gitHubUser->getId();
+
+        // 登録済みであればuser IDを返却
+        if ($user = $this->userModel->getUserByGitHubId($gitHubId)) {
+            return $user->id;
+        }
+
+        // usersに新たに登録
+        $userId = $this->userModel->insertUser('tmp'); // XXX: テーブル設計見直し
+        // テーブル格納用データ
+        $gitHubInformation = [
+            'user_id'   => $userId,
+            'token'     => $gitHubUser->token,
+            'github_id' => $gitHubUser->getId(),
+            'nickname'  => $gitHubUser->getNickname(),
+            'name'      => $gitHubUser->getName(),
+            'email'     => $gitHubUser->getEmail(),
+            'avatar'    => $gitHubUser->getAvatar(),
+        ];
+        $this->gitHubInfoModel->insert($gitHubInformation);
+        return $userId;
     }
 
     /**
@@ -48,15 +75,18 @@ class UserService extends Service implements UserServiceInterface
     }
 
     /**
-     * ユーザを削除する
+     * ユーザの電話番号をアップデート
      *
-     * @param string $gitHubName
+     * @param mixed   $userId
+     * @param string  $phoneNumber
      *
-     * @return bool $result
+     * @return bool
      */
-    public function dropUser($gitHubName)
+    public function updatePhoneNumber($userId, $phoneNumber)
     {
-        $result = $this->userModel->deleteUser($gitHubName);
-        return $result ? true : false;
+        $phoneNumber = '+81'.substr($phoneNumber, 1);
+        $result =
+            $this->userModel->updateUser($userId, ['phone_number' => $phoneNumber]);
+        return $result === 1;
     }
 }

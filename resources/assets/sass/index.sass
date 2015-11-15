@@ -1,8 +1,3 @@
-@mixin sa_form_font
-  font-family: $default_font
-  font-size: 1.5em
-  font-weight: 700
-
 .container
   display: table
   height: 100%
@@ -12,6 +7,10 @@
   h1
     font-size: 50px
     color: $font_color
+
+  h3
+    color: #BBCEE9
+    font-size: 24px
 
   &>div
     display: table-cell
@@ -43,14 +42,18 @@
           display: table-cell
           vertical-align: middle
 
-    button#register
+    button
       @include sa_form_font
-      background-color: $accent_color
-      color: $font_color
-      padding: 0.6em 3em
-      border: none
-      width: 100%
+      @include button_base_style
+      padding: .6em 0em
 
       &:hover
         position: relative
         top: 2px
+
+      &#edit
+        background-color: #169021
+        margin-bottom: 20px
+
+      &#logout
+        background-color: #D03E3E

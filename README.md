@@ -5,15 +5,19 @@ Saborunayo
 
 Don't be lazy.
 
+This application is for TechCrunch Tokyo Hackathon.
+
 ### Description
 
-Sabounayo watch your GitHub activity and warning you to develp through Yo.
+Sabounayo watch your GitHub activity and warning you to develp through Telephone.
 
 ### Demo
 
 [DEMO Page](http://saborunayo.sota1235.net/)
 
-![](https://i.gyazo.com/c74e88ff4162854e38b1aa7f16f3bab2.png)
+![](https://i.gyazo.com/92b1ba16528b6b26d1e7ab582f4a39cd.png)
+
+![](https://i.gyazo.com/8317518b3d5680b4d8b277be9be72dad.png)
 
 ### Requirement
 
@@ -60,7 +64,8 @@ $ cp .env.example .env
 
 You need some API keys.
 
-- [Yo API](https://dashboard.justyo.co)
+- [GitHub API](https://developer.github.com/)
+- [twilio API](https://jp.twilio.com/docs/api)
 
 ### Tests
 

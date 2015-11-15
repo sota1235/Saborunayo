@@ -2,9 +2,10 @@
  * index.js
  */
 
-var $ = require('jquery');
-var Promise = require('es6-promise').Promise;
-import Ajax from './ajax.babel.js';
+import $           from 'jquery';
+import { Promise } from 'es6-promise';
+import Ajax        from './ajax.babel.js';
+import PNotify     from 'pnotify';
 
 $(() => {
   /* Variables */
@@ -12,10 +13,12 @@ $(() => {
   let $yoName        = $('#yo_name');
   let $gitNameStatus = $('.git_status');
   let $submitButton  = $('#register');
+  let $updateButton  = $('#update');
 
   let appUrl = location.protocol + '//' + location.host;
-  let gitCheckAjax = new Ajax(appUrl + '/check/git');
-  let registerAjax = new Ajax(appUrl + '/register/user');
+  let gitCheckAjax   = new Ajax(appUrl + '/check/git');
+  let registerAjax   = new Ajax(appUrl + '/register/user');
+  let updatePhoneNum = new Ajax(appUrl + '/update/phonenumber');
 
   /* Functions */
   // draw GitHub user name status
@@ -34,7 +37,44 @@ $(() => {
     return json.status === 'success';
   };
 
+  // success notify
+  let successNotify = (title, text) => {
+    new PNotify({
+      title: title,
+      text: text,
+      type: 'success',
+      styling: 'fontawesome',
+    });
+  };
+
+  // failed notify
+  let failedNotify = (title, text) => {
+    new PNotify({
+      title: title,
+      text: text,
+      type: 'error',
+      styling: 'fontawesome',
+    });
+  };
+
   /* Event Listeners */
+  // update phone number
+  $updateButton.click(() => {
+    console.log('Debug: update phone number');
+    let number = $('#phone-number').val();
+    updatePhoneNum.request({ phone_number: number})
+      .then((result) => {
+        if(result.status === 'success') {
+          successNotify('Update Success!', 'Updating your phone number success');
+          return;
+        }
+        failedNotify('Update Error!', 'Update phone number failed...');
+      })
+      .catch((error) => {
+        failedNotify('Server Error!', 'Something wrong. Plese contact @sota1235');
+      });
+  });
+
   // watch and check GitHub user name
   $gitName.change(() => {
     console.log('Debug: text box changed');

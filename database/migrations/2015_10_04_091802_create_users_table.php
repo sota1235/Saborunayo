@@ -14,10 +14,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->increments();
-            $table->string('github_name')->unique();
-            $table->string('yo_name')->unique();
+            $table->string('phone_number');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('deleted_flag')->default(0);
+            $table->rememberToken();
         });
     }
 

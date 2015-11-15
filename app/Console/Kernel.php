@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\SaborunaYo::class,
+        \App\Console\Commands\CallToLazyDeveloper::class,
+        \App\Console\Commands\SendMailToLazyDeveloper::class,
     ];
 
     /**
