@@ -13,7 +13,7 @@
     </h3>
     <div class="sa_form">
       <div class="field">
-        <input type="text" id="yo_name" value="{{ $phoneNumber or null}}" placeholder="Enter your phone number" required>
+        <input type="text" id="phone-number" value="{{ $phoneNumber or null}}" placeholder="Enter your phone number" required>
       </div>
       <button id="update">Update</button>
     </div>

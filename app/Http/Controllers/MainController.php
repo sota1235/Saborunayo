@@ -29,6 +29,7 @@ class MainController extends Controller
     public function getEdit()
     {
         $phoneNumber = \Auth::driver('github')->user()->__get('phone_number');
+        $phoneNumber = str_replace('+81', '0', $phoneNumber);
         return view('edit', [
             'phoneNumber' => $phoneNumber === 'tmp' ? null : $phoneNumber,
         ]);
