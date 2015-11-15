@@ -50,10 +50,14 @@ class CallToLazyDeveloper extends Command
         foreach ($users as $user) {
             if (
                 !$gitHubService->checkContribution($user->name) &&
-                $user->phone_number !== 'tmp'
+                $user->phone_number !== 'tmp' || true
             ) {
                 $twilio->call($user->phone_number, function ($message) {
-                    $message->say('Shinchoku Do desuka');
+                    $num = rand(1, 2) === 1 ?: 2;
+                    $message->play(
+                      'http://saborunayo.sota1235.net/sounds/shinchoku'.$num.'.mp3',
+                      ['loop' => 2]
+                    );
                     sleep(1);
                 });
             }
