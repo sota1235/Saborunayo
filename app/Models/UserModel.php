@@ -30,7 +30,9 @@ class UserModel extends Model implements UserModelInterface
      */
     public function getUsers()
     {
-        return DB::table($this->table)->where('deleted_flag', 0)->get();
+        return \DB::table($this->table)
+            ->leftJoin('github_informations AS gi', 'users.id', '=', 'gi.user_id')
+            ->where('users.deleted_flag', 0)->get();
     }
 
     /**
