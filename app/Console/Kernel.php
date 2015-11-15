@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\SaborunaYo::class,
         \App\Console\Commands\CallToLazyDeveloper::class,
-        \App\Console\Commands\SendMailToLazyDeveloper::class,
     ];
 
     /**
