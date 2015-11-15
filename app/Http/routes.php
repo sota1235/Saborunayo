@@ -12,9 +12,11 @@
 */
 
 // authentication
-\Route::get('/login',          ['as' => 'auth.login',    'uses' => 'AuthController@getLogin']);
-\Route::get('/auth',           ['as' => 'auth',          'uses' => 'AuthController@redirectToGitHub']);
-\Route::get('/oauth/callback', ['as' => 'auth.callback', 'uses' => 'AuthController@handleGitHubRdirect']);
+\Route::group(['middleware' => 'guest'], function () {
+  \Route::get('/login',          ['as' => 'auth.login',    'uses' => 'AuthController@getLogin']);
+  \Route::get('/auth',           ['as' => 'auth',          'uses' => 'AuthController@redirectToGitHub']);
+  \Route::get('/oauth/callback', ['as' => 'auth.callback', 'uses' => 'AuthController@handleGitHubRdirect']);
+});
 
 // Need login
 \Route::group(['middleware' => 'auth'], function () {
