@@ -45,6 +45,7 @@ abstract class AbstractUserMockClass implements \App\Interfaces\Models\UserModel
     public function getUserByGitHubId($gitHubId) {}
     public function retrieveByToken($userId, $token, array $columns = ['*']) {}
     public function updateRememberToken($userId, $token) {}
+    public function updateUser($userId, array $updateColumns) {}
     public function insertUser($phoneNumber) {}
 }
 
