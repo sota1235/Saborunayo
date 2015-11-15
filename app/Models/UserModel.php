@@ -45,7 +45,9 @@ class UserModel extends Model implements UserModelInterface
      */
     public function getUserById($userId, array $columns = ['*'])
     {
-        return \DB::table($this->table)->where('id', $userId)->first($columns);
+        return \DB::table($this->table)
+            ->leftJoin('github_informations AS gi', 'users.id', '=', 'gi.user_id')
+            ->where('users.id', $userId)->first($columns);
     }
 
     /**
