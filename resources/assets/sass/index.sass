@@ -42,11 +42,18 @@
           display: table-cell
           vertical-align: middle
 
-    button#edit
+    button
       @include sa_form_font
       @include button_base_style
-      background-color: #169021
+      padding: .6em 0em
 
       &:hover
         position: relative
         top: 2px
+
+      &#edit
+        background-color: #169021
+        margin-bottom: 20px
+
+      &#logout
+        background-color: #D03E3E

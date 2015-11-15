@@ -14,6 +14,9 @@
       <a href="/edit">
         <button id="edit">Edit phone number</button>
       </a>
+      <a href="/logout">
+        <button id="logout">Logout</button>
+      </a>
     </div>
   </div>
 </div>
