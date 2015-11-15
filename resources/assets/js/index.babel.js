@@ -2,9 +2,9 @@
  * index.js
  */
 
-var $ = require('jquery');
-var Promise = require('es6-promise').Promise;
-import Ajax from './ajax.babel.js';
+import $           from 'jquery';
+import { Promise } from 'es6-promise';
+import Ajax        from './ajax.babel.js';
 
 $(() => {
   /* Variables */
