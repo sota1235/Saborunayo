@@ -93,6 +93,20 @@ class UserModel extends Model implements UserModelInterface
     }
 
     /**
+     * 指定されたパラメータを更新
+     *
+     * @param mixed  $userId
+     * @param array  $updateColumns
+     *
+     * @return bool
+     */
+    public function updateUser($userId, array $updateColumns)
+    {
+        return \DB::table($this->table)->where('id', $userId)
+            ->update($updateColumns);
+    }
+
+    /**
      * ユーザを登録し、IDを返す
      *
      * @param int $phoneNumber

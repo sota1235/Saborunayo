@@ -52,6 +52,16 @@ interface UserModelInterface
     public function updateRememberToken($userId, $token);
 
     /**
+     * 指定されたパラメータを更新
+     *
+     * @param mixed  $userId
+     * @param array  $updateColumns
+     *
+     * @return int
+     */
+    public function updateUser($userId, array $updateColumns);
+
+    /**
      * ユーザを登録し、IDを返す
      *
      * @param int $phoneNumber
